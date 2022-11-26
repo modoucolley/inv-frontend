@@ -20,9 +20,9 @@
     
     
     
-    "@mui/icons-material": "5.10.15 ",
-    "@mui/material": "5.10.15",
-    "@mui/styled-engine": "5.10.15",
+    "@mui/icons-material": "5.8.2",
+    "@mui/material": "5.8.2",
+    "@mui/styled-engine": "5.8.0",
     "@pathofdev/react-tag-input": "1.0.7",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.3.0",
