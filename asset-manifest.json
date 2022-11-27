@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/inv-frontend/static/css/main.ff348f7c.css",
-    "main.js": "/inv-frontend/static/js/main.bccde8bd.js",
+    "main.js": "/inv-frontend/static/js/main.9a0b7634.js",
     "static/media/vr-bg.jpg": "/inv-frontend/static/media/vr-bg.09e3bc1cff3711b57a2c.jpg",
     "static/media/macbook.png": "/inv-frontend/static/media/macbook.e0a8c5d5cc02d71b6d86.png",
     "static/media/img-2.jpg": "/inv-frontend/static/media/img-2.d97bd8ee71e6afc19404.jpg",
@@ -41,6 +41,6 @@
   },
   "entrypoints": [
     "static/css/main.ff348f7c.css",
-    "static/js/main.bccde8bd.js"
+    "static/js/main.9a0b7634.js"
   ]
 }
