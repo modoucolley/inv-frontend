@@ -44,6 +44,13 @@ import { deleteProduct } from "apiservices/productService";
 import { getCategories } from "apiservices/categoryService";
 import { editProduct } from "apiservices/productService";
 
+import axios from "axios";
+import Animation from "components/Animation/Animation";
+
+import { Container, Title, Ul, Cursor } from "components/Animation/StyledAnimation";
+
+
+
 function Products() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showAddProductForm, setShowAddProductForm] = useState(false);
@@ -54,6 +61,10 @@ function Products() {
   const [categoryOptions, setCategoryOptions] = useState(null);
   const category_options = [];
   const [editFormActive, setEditFormActive] = useState(false);
+
+
+  //INPIT FIELDS VALIDATIONS
+  const [errorProductPrice, setErrorProductPrice] = useState(false);
 
 
 
@@ -69,7 +80,7 @@ function Products() {
     label: "",
     price: "",
     tags: "",
-    status: "",
+    status: "In Stock",
   });
 
   const status_options = [
@@ -87,14 +98,54 @@ function Products() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const isValid = await AddProductSchema.isValid(productData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
       console.log(productData);
     } else {
+
+
+      const config = { headers : { 'Content-Type': 'multipart/formdata'}}
+      const url = 'http://localhost:8000/api/products/'
+      let formData = new FormData();
+      
+      formData.append('name', productData.name)
+      formData.append('label', productData.label)
+      formData.append('status', productData.status)
+      formData.append('tags', productData.tags)
+      formData.append('price', productData.price)
+      formData.append('category', productData.category)
+      formData.append('sortno', productData.sortno)
+      formData.append('stock', productData.stock)
+      formData.append('image', productImage.image[0])
+
+      axios.post(url, formData, config)
+           .then((res)=>{
+            console.log("res.data")
+            console.log(res.data)
+           })
+           .catch((err)=>{
+            console.log("err")
+            console.log(err)
+           })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       console.log(productData);
-      await addProduct(productData)
+      /* await addProduct(productData)
         .then((res) => {
           if (res.data?.status === "true") {
             console.log("Product Added");
@@ -109,12 +160,23 @@ function Products() {
         })
         .catch((err) => {
           console.log("Error Adding Product", err);
-        });
+        }); */
     }
   };
 
+  const [productImage, setProductImage] = useState(null)
+
   const handleChange = (e) => {
-    setProductData({ ...productData, [e.target.name]: e.target.value });
+
+    if([e.target.name]=='image'){
+      setProductImage({
+          image: e.target.files
+      })
+      console.log(e.target.files)
+    }
+    else{
+      setProductData({ ...productData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleChangeStatus = async (selectedOption) => {
@@ -174,6 +236,10 @@ function Products() {
 
   //START GET PRODUCTS
   const handleGetProductList = async () => {
+
+    toast.success("Fetching Products!!", { autoClose: 2000 });
+
+
     setProductList([]);
     setScreenLoading(true);
 
@@ -201,7 +267,10 @@ function Products() {
 
   //START GET CATEGORY
   const handleGetCategoryList = async () => {
+
+
     setCategoryList([]);
+    
     setScreenLoading(true);
 
     try {
@@ -245,12 +314,20 @@ function Products() {
 
   const rows = [];
 
+
+ 
+  
+
   productList.map(function (item, i) {
     rows.push({
       product: (
         <ArgonBox display="flex" alignItems="center" px={1} py={0.5}>
           <ArgonBox mr={2}>
-            <ArgonAvatar src={logoSpotify} alt={"name"} size="sm" variant="rounded" />
+            
+            <ArgonAvatar 
+            //src={'http://localhost:8000/media/'+ item.image} 
+            src={logoSpotify} 
+            alt={"name"} size="sm" variant="rounded" />
           </ArgonBox>
           <ArgonBox display="flex" flexDirection="column">
             <ArgonTypography variant="button" fontWeight="medium">
@@ -328,14 +405,59 @@ function Products() {
     });
   });
 
+  const fakeData = [
+    {
+      id: 1,
+      name: "Palov",
+      img: "https://i.ibb.co/5j8yQ3L/pilaf-sm.jpg",
+    },
+    {
+      id: 2,
+      name: "Beshbarmok",
+      img: "https://i.ibb.co/K0Q78Dy/beshbarmak-sm.jpg",
+    },
+    
+  ];
+
+
+  const [position, setPosition] = useState({
+    x: "",
+    y: "",
+  });
+
+  const handleMouseMove = (e) => {
+    setPosition({
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+
   useEffect(() => {
     handleGetProductList();
     handleGetCategoryList()
   }, []);
 
+
   return (
     <DashboardLayout>
       <ToastContainer />
+
+      
+
+      
+
+     
+
+
+
       <DashboardNavbar />
       <ArgonBox py={3}>
         {!showAddProductForm ? (
@@ -354,7 +476,7 @@ function Products() {
                     label: "",
                     price: "",
                     tags: "",
-                    status: "",
+                    status: "In Stock",
                   })
 
                   setShowAddProductForm(!showAddProductForm)
@@ -418,6 +540,7 @@ function Products() {
                     type="name"
                     name="sortno"
                     value={productData.sortno}
+                    style={ {borderColor: isNaN(productData.sortno) && 'red'}}
                     placeholder="Sort Number"
                     size="large"
                     onChange={handleChange}
@@ -443,6 +566,20 @@ function Products() {
                     onChange={handleChange}
                   />
                 </ArgonBox>
+
+
+                <ArgonBox mb={2} mx={5}>
+                  <ArgonInput
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    placeholder="Image"
+                    size="large"
+                    onChange={handleChange}
+                  />
+                </ArgonBox>
+
+
                 <ArgonBox mb={2} mx={5}>
                   <Select
                     name="category"
@@ -456,6 +593,7 @@ function Products() {
                   <ArgonInput
                     type="name"
                     name="stock"
+                    style={ {borderColor: isNaN(productData.stock) && 'red'}}
                     value={productData.stock}
                     placeholder="Stock"
                     size="large"
@@ -483,6 +621,7 @@ function Products() {
                 </ArgonBox>
                 <ArgonBox mb={2} mx={5}>
                   <ArgonInput
+                    style={ {borderColor: isNaN(productData.price) && 'red'}}
                     type="name"
                     name="price"
                     value={productData.price}

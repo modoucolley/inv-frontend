@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const axiosConfig = axios.create({
+  //baseURL: "https://go-inv-backend.herokuapp.com/",
   baseURL: "http://localhost:8000/",
   headers: {
     "Content-Type": "application/json",

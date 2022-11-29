@@ -57,8 +57,7 @@ import { getInvoices } from "apiservices/invoiceService";
 import CheckIcon from "@mui/icons-material/Check";
 import ToggleButton from "@mui/material/ToggleButton";
 import { editInvoice } from "apiservices/invoiceService";
-import { useReactToPrint } from 'react-to-print';
-
+import { useReactToPrint } from "react-to-print";
 
 function Invoices() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -76,17 +75,27 @@ function Invoices() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
 
+  // SHOWING INVOICE TABLE VARIABLE
+  const [showInvoiceTable, setShowInvoiceTable] = useState(true);
 
-  
+  // PRINT RECEIPT VARIABLES
+  const [showPrintView, setShowPrintView] = useState(false);
+  const [theBuyer, setTheBuyer] = useState("");
+  const [theReceipt, setTheReceipt] = useState("");
+
+
+  // USER VARIABLES
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  console.log(JSON.parse(localStorage.getItem("user")));
+  console.log(user);
+
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
-
   const [viewInvoiceActive, setViewInvoiceActive] = useState(true);
-
 
   const [selected, setSelected] = React.useState(false);
 
@@ -225,27 +234,24 @@ function Invoices() {
     }
   };
 
-
   const handleEdit = async (id) => {
-
-      console.log(invoiceData);
-      await editInvoice(id, invoiceData)
-        .then((res) => {
-          if (res.data?.status === "true") {
-            console.log("Supplier Updated");
-            toast.success("Invoice added as an Order Successfully");
-            handleGetInvoiceList();
-            console.log(res.data.result);
-          } else {
-            console.log("Supplier Could Not Be Updated");
-            console.log(res.data.result);
-            toast.error("Invoice Could Not Be Updated");
-          }
-        })
-        .catch((err) => {
-          console.log("Error Updating Supplier", err);
-        });
-    
+    console.log(invoiceData);
+    await editInvoice(id, invoiceData)
+      .then((res) => {
+        if (res.data?.status === "true") {
+          console.log("Supplier Updated");
+          toast.success("Invoice added as an Order Successfully");
+          handleGetInvoiceList();
+          console.log(res.data.result);
+        } else {
+          console.log("Supplier Could Not Be Updated");
+          console.log(res.data.result);
+          toast.error("Invoice Could Not Be Updated");
+        }
+      })
+      .catch((err) => {
+        console.log("Error Updating Supplier", err);
+      });
   };
 
   //START ADDING NEW PRODUCT
@@ -284,7 +290,7 @@ function Invoices() {
   //HANDLING ADD ORDER
 
   const [invoiceData, setInvoiceData] = useState({
-        type: "order"
+    type: "order",
   });
   const [ordertotalPrice, setOrderTotalPrice] = useState(0.0);
 
@@ -397,32 +403,22 @@ function Invoices() {
       "print receipt": (
         <Button
           onClick={async () => {
-           
+            setShowPrintView(true);
+            setShowAddForm(false);
+            setShowInvoiceTable(false);
 
-          setShowAddForm(true);
-          console.log(item)
-          setInvoiceData(item)
-          setProductInputRow([])
-          setOrderTotalPrice(0)
-          setViewInvoiceActive(true)
+            console.log(item);
+            //setOrderData(item);
+            setProductInputRow(item.products);
+            setOrderTotalPrice(0);
+            //setViewOrderActive(true);
 
-          
-          
+            console.log("view ");
+            console.log(item.products);
 
-
-          item.products.map((obj, i) => {
-
-            console.log("productInputRow[row]?.id");
-            console.log(obj.id);
-
-            setProductInputRow((current) => [
-              ...current,
-              { row: i, amount: obj.quantity, price: obj.amount, id: obj.id - 1 },
-            ]);
-          });
-
-          setOrderTotalPrice(item.total_price)
-          
+            setOrderTotalPrice(item.total_price);
+            setTheBuyer(item.buyer);
+                        setTheReceipt(item.receipt)
 
           }}
         >
@@ -435,13 +431,13 @@ function Invoices() {
           selected={selected}
           onChange={() => {
             setSelected(!selected);
-            handleEdit(item.id)
+            handleEdit(item.id);
           }}
         >
           <CheckIcon />
         </ToggleButton>
       ),
-     /*  delete: (
+      /*  delete: (
         <Button
           onClick={async () => {
             handleDeleteOrder(item.id);
@@ -830,8 +826,8 @@ function Invoices() {
 
       <DashboardNavbar />
       <ArgonBox py={3}>
-        {!showAddForm ? (
-          <ArgonBox   mb={35}>
+        {showInvoiceTable && (
+          <ArgonBox mb={35}>
             <Card>
               <ArgonBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
                 <ArgonTypography variant="h6">Invoice table</ArgonTypography>
@@ -850,7 +846,10 @@ function Invoices() {
               </ArgonBox>
             </Card>
           </ArgonBox>
-        ) : (
+        )}
+
+        {/*  { showInvoiceTable &&
+
           <ArgonBox  ref={componentRef} mb={3} pb={20}>
             <Card>
               <ArgonBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
@@ -984,14 +983,14 @@ function Invoices() {
                   />
                 </ArgonBox>
 
-                {/* <ArgonBox mb={2} mx={5}>
+                <ArgonBox mb={2} mx={5}>
                   <Select
                     name="status"
                     placeholder="Status"
                     options={status_options}
                     onChange={handleChangeStatus}
                   />
-                </ArgonBox> */}
+                </ArgonBox> 
 
                 <ArgonBox mb={2} mx={5}>
                   <ArgonInput
@@ -1006,16 +1005,169 @@ function Invoices() {
 
                 <ArgonBox mb={"20%"} display="flex" mx={5}>
                   <ArgonButton onClick={handlePrint} color="info" size="large" fullWidth>
-                     Print
+                    Print
                   </ArgonButton>
 
-                  {/*  <Button onClick={handleOpen}>Open modal</Button> */}
                 </ArgonBox>
               </ArgonBox>
             </Card>
           </ArgonBox>
+
+         } */}
+
+        {showPrintView && (
+          <>
+            <div className="container">
+              <div className="row gutters">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  <div
+                    style={{ justifyContent: "flex-start" }}
+                    className="custom-actions-btns mb-2"
+                  >
+                    <a
+                      onClick={() => {
+                        setShowInvoiceTable(true);
+                        setShowAddForm(false);
+                        setShowPrintView(false);
+                      }}
+                      className="btn btn-secondary"
+                    >
+                      <i className="icon-printer"></i> Show Invoice Table
+                    </a>
+                  </div>
+                </div>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  <div className="custom-actions-btns mb-2">
+                    <a
+                      onClick={() => {
+                        handlePrint();
+                      }}
+                      className="btn btn-primary"
+                    >
+                      <i className="icon-download"></i> Download
+                    </a>
+                    <a
+                      onClick={() => {
+                        toast.success("Loading Printer!!");
+                        handlePrint();
+                      }}
+                      className="btn btn-secondary"
+                    >
+                      <i className="icon-printer"></i> Print
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div ref={componentRef} className="row gutters">
+                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div className="card">
+                    <div className="card-body p-0">
+                      <div className="invoice-container">
+                        <div className="invoice-header">
+                          <div className="row gutters">
+                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                              <a href="index.html" className="invoice-logo">
+                                GoMindz Inventory
+                              </a>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-6">
+                              <address style={{textAlign: 'end'}} className="text-right">
+                                {user?.streetAddress}
+                                <br />
+                                {user?.region}
+                                <br />
+                                {user?.contact}
+                              </address>
+                            </div>
+                          </div>
+                          <div className="row gutters">
+                            <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                              <div className="invoice-details">
+                                <address>
+                                  {theBuyer}
+                                  <br />
+                                  150-600 Church Street, Florida, USA
+                                </address>
+                              </div>
+                            </div>
+                            <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                              <div className="invoice-details">
+                                <div className="invoice-num">
+                                  <div>Invoice - #{theReceipt}</div>
+                                  <div>{new Date().toLocaleString() + ""}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="invoice-body">
+                          <div className="row gutters">
+                            <div className="col-lg-12 col-md-12 col-sm-12">
+                              <div className="table-responsive">
+                                <table className="table custom-table m-0">
+                                  <thead>
+                                    <tr>
+                                      <th>Items</th>
+                                      <th>Product ID</th>
+                                      <th>Quantity</th>
+                                      <th>Sub Total</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {productInputRow?.map((row, i) => {
+                                      return (
+                                        <tr key={row}>
+                                          <td>
+                                            {row.name}
+                                            <p className="m-0 text-muted">{row.label}</p>
+                                          </td>
+                                          <td>${row.price}</td>
+                                          <td>{row.quantity}</td>
+                                          <td>${row.price * row.quantity}</td>
+                                        </tr>
+                                      );
+                                    })}
+
+                                    <tr>
+                                      <td>&nbsp;</td>
+                                      <td colSpan={2} /* colspan="2" */>
+                                        {/* <p>
+                                  Subtotal<br/>
+                                  Shipping &amp; Handling<br/>
+                                  Tax<br/>
+                                </p> */}
+                                        <h5 className="text-success">
+                                          <strong>Grand Total</strong>
+                                        </h5>
+                                      </td>
+                                      <td>
+                                        {/* <p>
+                                  $5000.00<br/>
+                                  $100.00<br/>
+                                  $49.00<br/>
+                                </p> */}
+                                        <h5 className="text-success">
+                                          <strong>${ordertotalPrice}</strong>
+                                        </h5>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="invoice-footer">Thank you for your Business.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </ArgonBox>
+
       <Footer />
     </DashboardLayout>
   );

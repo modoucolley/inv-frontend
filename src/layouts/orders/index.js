@@ -269,6 +269,7 @@ function Orders() {
 
   const [ordertotalPrice, setOrderTotalPrice] = useState(0.0);
   const [theBuyer, setTheBuyer] = useState("");
+  const [theReceipt, setTheReceipt] = useState("");
 
   // HANDLING PRODUCT ADDITION AND REMOVAL
 
@@ -408,18 +409,11 @@ function Orders() {
             console.log("view ");
             console.log(item.products);
 
-            /* item.products.map((obj, i) => {
-              console.log("productInputRow[row]?.id");
-              console.log(obj.id);
-
-              setProductInputRow((current) => [
-                ...current,
-                { row: i, amount: obj.quantity, price: obj.amount, id: obj.id - 1 },
-              ]);
-            }); */
+          
 
             setOrderTotalPrice(item.total_price);
             setTheBuyer(item.buyer)
+            setTheReceipt(item.receipt)
 
             //setIdProductRow(0 + 1);
           }}
@@ -1396,53 +1390,63 @@ function Orders() {
 
       {showPrintView && (
         <div className="container">
-          <Button
-            onClick={() => {
-              setShowOrderTable(true);
-              setShowAddForm(false);
-              setShowPrintView(false);
-            }}
-          >
-            <h4 style={{ paddingRight: 10 }}>Show Order Table </h4>
-            <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-bold-right" />
-          </Button>
-          <div ref={componentRef} className="row gutters">
+          
+          <div className="row gutters">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <div style={{justifyContent: 'flex-start'}} className="custom-actions-btns mb-2">
+                 
+                  <a
+                    onClick={() => {
+                      setShowPrintView(false);
+                      setShowAddForm(false);
+                      setShowOrderTable(true);
+                    }}
+                    className="btn btn-secondary"
+                  >
+                    <i className="icon-printer"></i> Show Order Table
+                  </a>
+                </div>
+                
+              </div>
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <div className="custom-actions-btns mb-2">
+                  <a
+                    onClick={() => {
+                      handlePrint();
+                    }}
+                    className="btn btn-primary"
+                  >
+                    <i className="icon-download"></i> Download
+                  </a>
+                  <a
+                    onClick={() => {
+                      toast.success("Loading Printer!!");
+                      handlePrint();
+                    }}
+                    className="btn btn-secondary"
+                  >
+                    <i className="icon-printer"></i> Print
+                  </a>
+                </div>
+                
+              </div>
+            </div>
+
+          <div style={{marginTop: 20}} ref={componentRef} className="row gutters">
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className="card">
                 <div className="card-body p-0">
                   <div className="invoice-container">
                     <div className="invoice-header">
-                      <div className="row gutters">
-                        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                          <div className="custom-actions-btns mb-5">
-                            <a
-                              onClick={() => {
-                                handlePrint();
-                              }}
-                              className="btn btn-primary"
-                            >
-                              <i className="icon-download"></i> Download
-                            </a>
-                            <a
-                              onClick={() => {
-                                toast.success("Loading Printer!!");
-                                handlePrint();
-                              }}
-                              className="btn btn-secondary"
-                            >
-                              <i className="icon-printer"></i> Print
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                      
                       <div className="row gutters">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                           <a href="index.html" className="invoice-logo">
                             GoMindz Inventory
                           </a>
                         </div>
-                        <div className="col-lg-6 col-md-6 col-sm-6">
-                          <address className="text-right">
+                        <div style={{justifyContent: 'flex-end'}} className="col-lg-6 col-md-6 col-sm-6">
+                          <address style={{textAlign: 'end'}} className="text-right">
                             {user?.streetAddress}
                             <br />
                             {user?.region}
@@ -1464,7 +1468,7 @@ function Orders() {
                         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                           <div className="invoice-details">
                             <div className="invoice-num">
-                              <div>Invoice - #009</div>
+                              <div>Order Receipt - #{theReceipt}</div>
                               <div>{new Date().toLocaleString() + ""}</div>
                             </div>
                           </div>
@@ -1479,7 +1483,7 @@ function Orders() {
                               <thead>
                                 <tr>
                                   <th>Items</th>
-                                  <th>Product ID</th>
+                                  <th>Unit Price</th>
                                   <th>Quantity</th>
                                   <th>Sub Total</th>
                                 </tr>
@@ -1493,9 +1497,9 @@ function Orders() {
                                         {row.name}
                                         <p className="m-0 text-muted">{row.label}</p>
                                       </td>
-                                      <td>{row.id}</td>
-                                      <td>{row.quantity}</td>
                                       <td>${row.price}</td>
+                                      <td>{row.quantity}</td>
+                                      <td>${row.price * row.quantity}</td>
                                     </tr>
                                   );
                                 })}
