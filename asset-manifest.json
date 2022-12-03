@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/inv-frontend/static/css/main.ff348f7c.css",
-    "main.js": "/inv-frontend/static/js/main.eca1fc0c.js",
+    "main.js": "/inv-frontend/static/js/main.fc735f9b.js",
     "static/media/vr-bg.jpg": "/inv-frontend/static/media/vr-bg.09e3bc1cff3711b57a2c.jpg",
     "static/media/macbook.png": "/inv-frontend/static/media/macbook.e0a8c5d5cc02d71b6d86.png",
     "static/media/img-2.jpg": "/inv-frontend/static/media/img-2.d97bd8ee71e6afc19404.jpg",
@@ -35,12 +35,12 @@
     "static/media/logo-spotify.svg": "/inv-frontend/static/media/logo-spotify.3f055cde07c024fb2b73063b46416f1b.svg",
     "static/media/logo-jira.svg": "/inv-frontend/static/media/logo-jira.f9c1ddbe3e751a29bd16580977ade064.svg",
     "static/media/logo-webdev.svg": "/inv-frontend/static/media/logo-webdev.88aae85b5a8a994aa0009d6c389a7f77.svg",
-    "static/media/down-arrow-dark.svg": "/inv-frontend/static/media/down-arrow-dark.877afedfbd4c65c649e4592571ba64fa.svg",
-    "static/media/down-arrow.svg": "/inv-frontend/static/media/down-arrow.91f06e629024566240e41693f68c9719.svg",
+    "static/media/down-arrow-dark.svg": "/inv-frontend/static/media/down-arrow-dark.0de0d7f941fa503159fc6b623073b178.svg",
+    "static/media/down-arrow.svg": "/inv-frontend/static/media/down-arrow.051bd8d92332ad76ee671f521a05a476.svg",
     "static/media/down-arrow-white.svg": "/inv-frontend/static/media/down-arrow-white.65368f2dfa77fc3dd394bd5f75a9d7f5.svg"
   },
   "entrypoints": [
     "static/css/main.ff348f7c.css",
-    "static/js/main.eca1fc0c.js"
+    "static/js/main.fc735f9b.js"
   ]
 }
