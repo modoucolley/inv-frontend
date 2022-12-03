@@ -2,7 +2,8 @@ import axios from "axios";
 
 const axiosConfig = axios.create({
   //baseURL: "https://go-inv-backend.herokuapp.com/",
-  baseURL: "http://localhost:8000/",
+  baseURL: "https://web-production-027a.up.railway.app/",
+  //baseURL: "http://localhost:8000/",
   headers: {
     "Content-Type": "application/json",
     'Access-Control-Allow-Origin': 'http://localhost:3000',

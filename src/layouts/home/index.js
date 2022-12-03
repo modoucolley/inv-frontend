@@ -77,12 +77,12 @@ function Home() {
         <div className="container">
           <a
             className="navbar-brand  text-white "
-            href="https://demos.creative-tim.com/material-kit/presentation"
+            href="#"
             rel="tooltip"
             title="Designed and Coded by Creative Tim"
             data-placement="bottom"
           >
-            Go Inventory
+            Go Inventory App
           </a>
           <button
             className="navbar-toggler shadow-none ms-2"
@@ -518,14 +518,14 @@ function Home() {
           <div className=" row">
             <div className="col-md-3 mb-4 ms-auto">
               <div>
-                <a href="https://www.creative-tim.com/product/material-kit">
+                <a href="#">
                   <img
                     src={require("../../assets/images/apple-icon.png")}
                     className="mb-3 footer-logo"
                     alt="main_logo"
                   />
                 </a>
-                <h6 className="font-weight-bolder mb-4">Go Inventory</h6>
+                <h6 className="font-weight-bolder mb-4">Go Inventory App</h6>
               </div>
               <div>
                 <ul className="d-flex flex-row ms-n3 nav">

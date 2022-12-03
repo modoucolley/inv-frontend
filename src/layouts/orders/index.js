@@ -99,6 +99,10 @@ function Orders() {
   };
 
   const handleGetOrderList = async () => {
+
+    toast.success("Fetching Orders!!", { autoClose: 2000 });
+
+
     setOrderList([]);
     setScreenLoading(true);
 

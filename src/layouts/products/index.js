@@ -58,7 +58,7 @@ function Products() {
   const [screenloading, setScreenLoading] = useState(true);
   const [productList, setProductList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  const [categoryOptions, setCategoryOptions] = useState(null);
+  const [categoryOptions, setCategoryOptions] = useState([]);
   const category_options = [];
   const [editFormActive, setEditFormActive] = useState(false);
 
@@ -107,7 +107,7 @@ function Products() {
 
 
       const config = { headers : { 'Content-Type': 'multipart/formdata'}}
-      const url = 'http://localhost:8000/api/products/'
+      const url = 'https://web-production-027a.up.railway.app/api/products/'
       let formData = new FormData();
       
       formData.append('name', productData.name)
@@ -118,16 +118,23 @@ function Products() {
       formData.append('category', productData.category)
       formData.append('sortno', productData.sortno)
       formData.append('stock', productData.stock)
-      formData.append('image', productImage.image[0])
+      formData.append('image', productImage?.image[0])
 
       axios.post(url, formData, config)
            .then((res)=>{
             console.log("res.data")
             console.log(res.data)
+            toast.success("Product Added Successfully");
+            handleGetProductList();
+            console.log(res.data.result);
+            setShowAddProductForm(false)
+            
            })
            .catch((err)=>{
             console.log("err")
             console.log(err)
+            console.log("Product Could Not Be Added");
+            toast.error("Product Could Not Be Added");
            })
 
 
@@ -556,16 +563,7 @@ function Products() {
                     onChange={handleChange}
                   />
                 </ArgonBox>
-                <ArgonBox mb={2} mx={5}>
-                  <ArgonInput
-                    type="name"
-                    name="images"
-                    value={productData.images}
-                    placeholder="Images"
-                    size="large"
-                    onChange={handleChange}
-                  />
-                </ArgonBox>
+                
 
 
                 <ArgonBox mb={2} mx={5}>
@@ -584,7 +582,7 @@ function Products() {
                   <Select
                     name="category"
                     placeholder="Category"
-                    value={categoryOptions[productData.category - 1]}
+                    value={categoryOptions[productData?.category - 1]}
                     options={categoryOptions}
                     onChange={handleChangeCategory}
                   />

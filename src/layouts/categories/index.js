@@ -161,6 +161,11 @@ function Categories() {
 
   //START GET CATEGORY
   const handleGetCategoryList = async () => {
+
+    toast.success("Fetching Categories!!", { autoClose: 2000 });
+
+
+
     setCategoryList([]);
     setScreenLoading(true);
 
