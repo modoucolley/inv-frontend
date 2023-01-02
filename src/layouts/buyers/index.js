@@ -78,13 +78,16 @@ function Buyers() {
         .then((res) => {
           if (res.data?.status === "true") {
             console.log("Buyer Added");
-            toast.success("Buyer Added Successfully");
+            toast.success("Successfully Added ");
             handleGetBuyerList();
+            setShowAddForm(false)
             console.log(res.data.result);
           } else {
             console.log("Buyer Could Not Be Added");
-            console.log(res.data.result);
-            toast.error("Buyer Could Not Be Added");
+            console.log((res.data.result[Object.keys(res.data.result)[0]])[0]);
+            
+            //toast.error("Buyer Could Not Be Added");
+            toast.error((res.data.result[Object.keys(res.data.result)[0]])[0]);
           }
         })
         .catch((err) => {

@@ -42,6 +42,9 @@ import { SignalCellularNull } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import { Routes, Route, Navigate, useLocation, } from "react-router-dom";
 
+import { useNavigate } from 'react-router-dom';
+
+
 
 import "./index.css";
 
@@ -86,6 +89,10 @@ function Orders() {
     return <div ref={ref}>My cool content here!</div>;
   });
 
+
+  const navigate = useNavigate();
+
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -100,6 +107,10 @@ function Orders() {
 
   const handleGetOrderList = async () => {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
+
     toast.success("Fetching Orders!!", { autoClose: 2000 });
 
 
@@ -107,7 +118,7 @@ function Orders() {
     setScreenLoading(true);
 
     try {
-      await getOrders()
+      await getOrders(user.id)
         .then((res) => {
           console.log(res);
           if (res.data?.status === "true") {
@@ -128,9 +139,15 @@ function Orders() {
 
   //START GET PRODUCTS
   const handleGetProductList = async () => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
+
+
     setProductList([]);
     try {
-      await getProducts()
+      await getProducts(user.id)
         .then((res) => {
           console.log(res);
           if (res.data?.status === "true") {
@@ -942,6 +959,12 @@ function Orders() {
 
   const handleSubmit = async (e) => {
     //e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
+
+    
     let resTopics = [
       {
         id: firstProductId,
@@ -966,6 +989,8 @@ function Orders() {
       ["total_price"]: ordertotalPrice,
       ["type"]: "order",
       ["status"]: "pending",
+      ["userid"]: user.id,
+      
     });
 
     setInvoiceData({
@@ -974,6 +999,7 @@ function Orders() {
       ["total_price"]: ordertotalPrice,
       ["type"]: "invoice",
       ["status"]: "pending",
+      ["userid"]: user.id,
     });
 
     //console.log(otherProducts)
@@ -998,7 +1024,7 @@ function Orders() {
           console.log(res.data);
           if (res.data?.status === "true") {
             console.log("Order Added");
-            toast.success("Order Added Successfully");
+            toast.success(" Successfully Added");
 
             setFirstProductId("");
             setIdProductRow(0);
@@ -1023,6 +1049,8 @@ function Orders() {
             console.log(res.data.result);
             toast.error("Order Could Not Be Added");
             setOpen(false);
+
+            
           }
         })
         .catch((err) => {
@@ -1066,6 +1094,7 @@ function Orders() {
             setOpen(false);
             handleGetOrderList();
             console.log(res.data.result);
+            navigate('/invoices');
           } else {
             console.log("Order Could Not Be Added");
             console.log(res.data.result);

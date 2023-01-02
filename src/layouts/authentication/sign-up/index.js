@@ -39,6 +39,7 @@ function Cover() {
     email: "",
     password: "",
     contact: "",
+    companyname : "",
     firstname : "",
     lastname: "",
     streetAddress: "",
@@ -58,28 +59,35 @@ function Cover() {
     const isValid = await RegisterUserSchema.isValid(userData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log("userDataddddddddddd");
+   
       console.log(userData);
     } else {
       console.log(userData);
       await registerUser(userData)
-        .then((res) => {
+        .then(async(res) => {
           if (res.data) {
 
             console.log(res)
             console.log(res)
             if(res.data.message == 'success'){
-              console.log("User Registered In Success");
+              console.log("User Registered Success");
               console.log(res.data.status);
-              toast.success("User Registered Successfully");
+              //toast.success("User Registered Successfully");
               localStorage.removeItem("user")
               localStorage.removeItem("token");
-              navigate('/authentication/sign-in');
+              toast.success("Successful Sign Up", {
+                onClose: () => {
+                  navigate('/authentication/sign-in');
+                },
+                autoClose: 1000
+              });
+              
             }
 
             else{
               console.log("User Could Not Be Registered");
             console.log(res);
+            toast.error((res.data[Object.keys(res.data)[0]])[0]);
             toast.error("User Could Not Be Registered");
             }
             
@@ -135,7 +143,20 @@ function Cover() {
           <ArgonBox component="form" role="form">
 
 
-
+          <Grid container spacing={6}>
+          <Grid item xs={12} md={12}>
+          <ArgonBox mb={2}>
+            <ArgonInput
+            name="companyname"
+            type="text"
+            placeholder="Company Name"
+            size="large"
+            onChange={handleChange}
+          />
+            </ArgonBox>
+          </Grid>
+          
+        </Grid>
 
           <Grid container spacing={3}>
           <Grid item xs={12} md={6}>

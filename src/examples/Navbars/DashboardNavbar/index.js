@@ -66,6 +66,8 @@ import { useNavigate } from 'react-router-dom';
 function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
   const [navbarType, setNavbarType] = useState();
 
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
 
   const navigate = useNavigate();
 
@@ -207,6 +209,33 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
                   })}
                 >
                   account_circle
+                </Icon>
+                <ArgonTypography
+                
+                
+
+                  variant="button"
+                  fontWeight="medium"
+                  color={light && transparentNavbar ? "white" : "dark"}
+                >
+                  {user?.name}
+                </ArgonTypography>
+              </IconButton>
+
+              <IconButton
+                sx={navbarIconButton}
+                size="small"
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  
+                }}
+              >
+                <Icon
+                  sx={({ palette: { dark, white } }) => ({
+                    color: light && transparentNavbar ? white.main : dark.main,
+                  })}
+                >
+                  logout
                 </Icon>
                 <ArgonTypography
                 

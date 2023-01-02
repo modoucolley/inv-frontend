@@ -1,8 +1,8 @@
 import axiosConfig from "./axios-config";
 
-export const getCategories = async () => {
+export const getCategories = async (customerId) => {
   const data = await axiosConfig
-    .get(`/categories/`)
+    .get(`/api/categories/customers/${customerId}`)
     .then((response) => {
       return response;
     })
@@ -15,7 +15,7 @@ export const getCategories = async () => {
 
 export const addCategory = async (productData) => {
   const data = await axiosConfig
-    .post(`/categories/`, productData)
+    .post(`/api/categories/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -33,7 +33,7 @@ export const addCategory = async (productData) => {
 
 export const editCategoriee = async (categorieId, categorieData) => {
   const data = await axiosConfig
-    .put(`/categories/${categorieId}`, categorieData)
+    .put(`/api/categories/${categorieId}`, categorieData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -52,7 +52,7 @@ export const editCategoriee = async (categorieId, categorieData) => {
 
 export const deleteCategory= async (id) => {
   const data = await axiosConfig
-    .delete(`/categories/${id}`)
+    .delete(`/api/categories/${id}`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

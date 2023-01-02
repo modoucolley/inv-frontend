@@ -137,8 +137,9 @@ function Home() {
               </li>
 
             
-              <li className="nav-item my-auto ms-3 ms-lg-0">
+              <li  className="nav-item my-auto ms-3 ms-lg-0">
                 <Link
+                style={{fontSize: 10, paddingLeft: 10, paddingRight: 10}}
                   to="/authentication/sign-up"
                   className="btn btn-sm  bg-white  mb-0 me-1 mt-2 mt-md-0"
                 >
@@ -149,7 +150,7 @@ function Home() {
               {user != null && (
                 <li className="nav-item my-auto ms-3 ms-lg-0">
                   <p
-                    style={{ backgroundColor: "#030305" }}
+                    style={{backgroundColor: "#030305", fontSize: 10, paddingLeft: 10, paddingRight: 10}}
                     className="btn btn-sm  mb-0 me-1 mt-2 mt-md-0"
                   >
                     {" Welcome " + user?.name}
@@ -503,7 +504,7 @@ function Home() {
                 <div className="position-relative">
                   <img
                     className="max-width-50 w-100 position-relative z-index-2"
-                    src={require("../../assets/images/macbook.png")}
+                    src={require("../../assets/images/GomindzInventory.png")}
                     alt="image"
                   />
                 </div>

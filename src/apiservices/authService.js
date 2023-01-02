@@ -1,5 +1,6 @@
 import { baseUrl } from "./baseURL";
-import axiosConfig from "./axios-configAuth";
+import axiosConfig from "./axios-config";
+
 
 export const loginUser = async (userData) => {
   console.log("Calling Login API Service");

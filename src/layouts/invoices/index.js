@@ -115,8 +115,12 @@ function Invoices() {
     setOrderList([]);
     setScreenLoading(true);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
+
     try {
-      await getInvoices()
+      await getInvoices(user.id)
         .then((res) => {
           console.log(res);
           if (res.data?.status === "true") {

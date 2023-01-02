@@ -48,6 +48,7 @@ import axios from "axios";
 import Animation from "components/Animation/Animation";
 
 import { Container, Title, Ul, Cursor } from "components/Animation/StyledAnimation";
+import { baseUrl } from "apiservices/baseURL";
 
 
 
@@ -75,7 +76,6 @@ function Products() {
     name: "",
     sortno: "",
     category: "",
-    images: "",
     stock: "",
     label: "",
     price: "",
@@ -98,6 +98,10 @@ function Products() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
     
     const isValid = await AddProductSchema.isValid(productData);
     if (!isValid) {
@@ -106,11 +110,17 @@ function Products() {
     } else {
 
 
-      const config = { headers : { 'Content-Type': 'multipart/formdata'}}
-      const url = 'https://web-production-027a.up.railway.app/api/products/'
+      const config = { headers : { 
+        'Content-Type': 'multipart/formdata',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': 'http://192.168.1.72:3000',
+        'Access-Control-Allow-Credentials': 'true'
+      }}
+      const url = `${baseUrl}api/products/`
       let formData = new FormData();
       
       formData.append('name', productData.name)
+      formData.append('userid', user.id)
       formData.append('label', productData.label)
       formData.append('status', productData.status)
       formData.append('tags', productData.tags)
@@ -118,22 +128,37 @@ function Products() {
       formData.append('category', productData.category)
       formData.append('sortno', productData.sortno)
       formData.append('stock', productData.stock)
-      formData.append('image', productImage?.image[0])
+      formData.append('image', productImage == null ? '' : productImage?.image[0])
+
+      console.log("fffffffffffffffffffff")
+      console.log(formData)
 
       axios.post(url, formData, config)
            .then((res)=>{
-            console.log("res.data")
+
+            console.log("yyyyyyyyyyyyyy")
             console.log(res.data)
-            toast.success("Product Added Successfully");
-            handleGetProductList();
-            console.log(res.data.result);
-            setShowAddProductForm(false)
+
+            if (res.data?.status === "true") {
+              console.log("Buyer Added");
+              toast.success("Successfully Added ");
+              handleGetProductList();
+              setShowAddProductForm(false)
+              console.log(res.data.result);
+            } else {
+              console.log("Product Could Not Be Added");
+              console.log((res.data.result[Object.keys(res.data.result)[0]])[0]);
+              
+              //toast.error("Buyer Could Not Be Added");
+              toast.error((res.data.result[Object.keys(res.data.result)[0]])[0]);
+            }
+
             
            })
            .catch((err)=>{
             console.log("err")
             console.log(err)
-            console.log("Product Could Not Be Added");
+            console.log("Product Could Not Be Added, Verify Product Name is Not Duplicated");
             toast.error("Product Could Not Be Added");
            })
 
@@ -151,7 +176,6 @@ function Products() {
 
 
 
-      console.log(productData);
       /* await addProduct(productData)
         .then((res) => {
           if (res.data?.status === "true") {
@@ -213,7 +237,7 @@ function Products() {
         .then((res) => {
           if (res.data?.status === "true") {
             console.log("Product Updated");
-            toast.success("product Updated Successfully");
+            toast.success("Successfully Updated ");
             handleGetProductList();
             console.log(res.data.result);
           } else {
@@ -241,9 +265,14 @@ function Products() {
   };
 
 
+
+
   //START GET PRODUCTS
   const handleGetProductList = async () => {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
     toast.success("Fetching Products!!", { autoClose: 2000 });
 
 
@@ -251,7 +280,7 @@ function Products() {
     setScreenLoading(true);
 
     try {
-      await getProducts()
+      await getProducts(user.id)
         .then((res) => {
           console.log(res);
           if (res.data?.status === "true") {
@@ -275,13 +304,16 @@ function Products() {
   //START GET CATEGORY
   const handleGetCategoryList = async () => {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("userssssssssssssss")
+    console.log(user)
 
     setCategoryList([]);
     
     setScreenLoading(true);
 
     try {
-      await getCategories()
+      await getCategories(user.id)
         .then((res) => {
           console.log(res);
           if (res.data?.status === "true") {
@@ -478,7 +510,6 @@ function Products() {
                     name: "",
                     sortno: "",
                     category: { id: "" },
-                    images: "",
                     stock: "",
                     label: "",
                     price: "",

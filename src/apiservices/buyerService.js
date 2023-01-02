@@ -3,7 +3,7 @@ import axiosConfig from "./axios-config";
 
 export const getBuyers = async () => {
   const data = await axiosConfig
-    .get(`/buyers/`)
+    .get(`/api/buyers/`)
     .then((response) => {
       return response;
     })
@@ -17,7 +17,7 @@ export const getBuyers = async () => {
 
 export const editBuyer = async (buyerId, buyerData) => {
   const data = await axiosConfig
-    .put(`/buyers/${buyerId}`, buyerData)
+    .put(`/api/buyers/${buyerId}`, buyerData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -37,7 +37,7 @@ export const editBuyer = async (buyerId, buyerData) => {
 
 export const getBuyerCount = async () => {
   const data = await axiosConfig
-    .get(`/buyercount/`)
+    .get(`/api/buyercount/`)
     .then((response) => {
       return response;
     })
@@ -52,7 +52,7 @@ export const getBuyerCount = async () => {
 
 export const addBuyer = async (buyerData) => {
   const data = await axiosConfig
-    .post(`/buyers/`, buyerData)
+    .post(`/api/buyers/`, buyerData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -70,7 +70,7 @@ export const addBuyer = async (buyerData) => {
 
 export const deleteBuyer = async (id) => {
   const data = await axiosConfig
-    .delete(`/buyers/${id}`)
+    .delete(`/api/buyers/${id}`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

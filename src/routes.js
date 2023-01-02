@@ -74,24 +74,25 @@ const routes = [
   },
   {
     type: "route",
-    name: "Suppliers",
-    key: "suppliers",
-    route: "/suppliers",
+    name: "Orders",
+    key: "orders",
+    route: "/orders",
     icon: (
-      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-bus-front-12" />
+      <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-delivery-fast" />
     ),
-    component: <Suppliers />,
+    component: <Orders />,
   },
   {
     type: "route",
-    name: "Buyers",
-    key: "buyers",
-    route: "/buyers",
+    name: "Invoices",
+    key: "invoices",
+    route: "/invoices",
     icon: (
-      <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-cart" />
+      <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-credit-card" />
     ),
-    component: <Buyers />,
+    component: <Invoices />,
   },
+  
   {
     type: "route",
     name: "Products",
@@ -114,24 +115,26 @@ const routes = [
   },
   {
     type: "route",
-    name: "Orders",
-    key: "orders",
-    route: "/orders",
+    name: "Buyers",
+    key: "buyers",
+    route: "/buyers",
     icon: (
-      <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-delivery-fast" />
+      <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-cart" />
     ),
-    component: <Orders />,
+    component: <Buyers />,
   },
   {
     type: "route",
-    name: "Invoices",
-    key: "invoices",
-    route: "/invoices",
+    name: "Suppliers",
+    key: "suppliers",
+    route: "/suppliers",
     icon: (
-      <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-credit-card" />
+      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-bus-front-12" />
     ),
-    component: <Invoices />,
+    component: <Suppliers />,
   },
+ 
+
   { type: "title", title: "Account Pages", key: "account-pages" },
   {
     type: "route",

@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import axiosConfig from "./axios-config";
 
-export const getInvoices = async () => {
+export const getInvoices = async (customerId) => {
   const data = await axiosConfig
-    .get(`/invoices/`)
+    .get(`/api/invoices/customers/${customerId}`)
     .then((response) => {
       return response;
     })
@@ -18,7 +18,7 @@ export const getInvoices = async () => {
 
 export const getInvoiceCount = async () => {
   const data = await axiosConfig
-    .get(`/ordercount/`)
+    .get(`/api/ordercount/`)
     .then((response) => {
       return response;
     })
@@ -33,7 +33,7 @@ export const getInvoiceCount = async () => {
 
 export const addInvoice = async (productData) => {
   const data = await axiosConfig
-    .post(`/orders/`, productData)
+    .post(`/api/orders/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -51,7 +51,7 @@ export const addInvoice = async (productData) => {
 
 export const deleteInvoice = async (id) => {
   const data = await axiosConfig
-    .delete(`/orders/${id}`)
+    .delete(`/api/orders/${id}`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -70,7 +70,7 @@ export const deleteInvoice = async (id) => {
 
 export const editInvoice = async (id, data) => {
   const data1 = await axiosConfig
-    .put(`/invoices/${id}`, data)
+    .put(`/api/invoices/${id}`, data)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
