@@ -84,10 +84,10 @@ function Overview() {
               title="profile information"
               description="Hi, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
               info={{
-                fullName: user.name,
+                fullName: user.first_name + ' ' + user.last_name,
                 mobile: user.contact,
                 email: user.email,
-                location: user.streetAddress,
+                location: user.city,
               }}
               social={[
                 {

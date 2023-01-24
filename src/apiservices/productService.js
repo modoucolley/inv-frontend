@@ -6,13 +6,13 @@ console.log("user.email")
 console.log(user?.id)
 
 
-export const getProducts = async (customerId) => {
+export const getProducts = async () => {
   const data = await axiosConfig
-    .get(`/api/products/customers/${customerId}`)
+    .get(`/store/products/`)
     .then((response) => {
       return response;
     })
-    .catch((err) => {
+    .catch((err) => { 
       console.log(err);
     });
 
@@ -35,7 +35,7 @@ export const getProductCount = async () => {
 
 export const addProduct = async (productData) => {
   const data = await axiosConfig
-    .post(`/api/products/`, productData)
+    .post(`/store/products/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -53,7 +53,7 @@ export const addProduct = async (productData) => {
 
 export const deleteProduct = async (id) => {
   const data = await axiosConfig
-    .delete(`/api/products/${id}`)
+    .delete(`/store/products/${id}/`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -61,8 +61,8 @@ export const deleteProduct = async (id) => {
     })
     .catch((err) => {
       console.log("Api Error")
-      console.log(err.response.data.result);
-      return err.response;
+      console.log(err);
+      return err;
     });
 
   return data;
@@ -70,7 +70,7 @@ export const deleteProduct = async (id) => {
 
 export const editProduct = async (productData) => {
   const data = await axiosConfig
-    .put(`/api/products/${productData.id}`, productData)
+    .put(`/store/products/${productData.id}`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

@@ -51,15 +51,20 @@ function Illustration() {
       console.log(userData);
       await loginUser(userData)
         .then((res) => {
-          if (res.data) {
-            console.log("User Logged In Success");
+
+          console.log('res')
+          console.log(res.status)
+          console.log(res.data)
+          
+          if (res.data.status == true) {
+            console.log("User Logged In Successgggg hjgvwy");
             console.log(res.data.status);
             toast.success("User Login Successfully");
             
             console.log(res.data.result);
-            localStorage.setItem("token", res.data.result.jwt);
-            localStorage.setItem("user", JSON.stringify(res.data.result.user));
-            setUser(res.data.result);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            setUser(res.data.user);
           } else {
             console.log("User Could Not Be Logged In");
             console.log(res.data);

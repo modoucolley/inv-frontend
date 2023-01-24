@@ -147,14 +147,14 @@ function Orders() {
 
     setProductList([]);
     try {
-      await getProducts(user.id)
+      await getProducts()
         .then((res) => {
           console.log(res);
-          if (res.data?.status === "true") {
+          if (res.data.length > 0)  {
             console.log("Product List");
-            console.log(res.data.result);
+            console.log(res.data);
 
-            res.data.result.map((item) => {
+            res.data.map((item) => {
               product_options.push({
                 value: item.name,
                 label: item.name,
@@ -164,6 +164,7 @@ function Orders() {
             });
 
             setProductOptions(product_options);
+            
           } else {
             setProductList([]);
           }

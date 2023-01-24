@@ -3,7 +3,7 @@ import axiosConfig from "./axios-config";
 
 export const getOrders = async (customerId) => {
   const data = await axiosConfig
-    .get(`/api/orders/customers/${customerId}`) 
+    .get(`/store/orders/`) 
     .then((response) => {
       return response;
     })
@@ -33,7 +33,7 @@ export const getOrderCount = async () => {
 
 export const addOrder = async (productData) => {
   const data = await axiosConfig
-    .post(`/api/orders/`, productData)
+    .post(`/store/orders/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -51,7 +51,7 @@ export const addOrder = async (productData) => {
 
 export const deleteOrder = async (id) => {
   const data = await axiosConfig
-    .delete(`/api/orders/${id}`)
+    .delete(`/store/orders/${id}`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

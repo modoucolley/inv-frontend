@@ -218,7 +218,7 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
                   fontWeight="medium"
                   color={light && transparentNavbar ? "white" : "dark"}
                 >
-                  {user?.name}
+                  {user?.first_name}
                 </ArgonTypography>
               </IconButton>
 

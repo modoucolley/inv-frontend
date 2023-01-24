@@ -93,7 +93,13 @@ function Categories() {
       console.log(categoryData);
       await addCategory(categoryData)
         .then((res) => {
-          if (res.data?.status === "true") {
+
+
+          console.log("addedd")
+
+          console.log(res)
+
+          if (res.status == 201 ) {
             console.log("Category Added");
             toast.success(" Successfully Added ");
             handleGetCategoryList();
@@ -163,7 +169,7 @@ function Categories() {
   const handleDeleteCategory = async (id) => {
     await deleteCategory(id)
       .then((res) => {
-        if (res.data?.status === "true") {
+        if (res.status == 204 ) {
           handleGetCategoryList();
         } else {
         }
@@ -184,13 +190,17 @@ function Categories() {
     setScreenLoading(true);
 
     try {
-      await getCategories(user.id)
+      await getCategories()
         .then((res) => {
+          console.log('theeeeeeee');
           console.log(res);
-          if (res.data?.status === "true") {
+
+          console.log(res.data);
+
+           if (res.data.length > 0) {
             console.log("Category List");
-            console.log(res.data.result);
-            setCategoryList(res.data.result);
+            console.log(res.data);
+            setCategoryList(res.data);
           } else {
             setCategoryList([]);
           }

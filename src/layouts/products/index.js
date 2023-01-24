@@ -85,12 +85,12 @@ function Products() {
 
   const status_options = [
     {
-      value: "In Stock",
-      label: "In Stock",
+      value: "in_stock",
+      label: "in stock",
       id: 0,
     },
     {
-      value: "Out of Stock",
+      value: "out_of_stock",
       label: "Out of Stock",
       id: 1
     },
@@ -109,14 +109,17 @@ function Products() {
       console.log(productData);
     } else {
 
+      let token = localStorage.getItem("token");
+
 
       const config = { headers : { 
         'Content-Type': 'multipart/formdata',
         'Access-Control-Allow-Origin': 'http://localhost:3000',
         'Access-Control-Allow-Origin': 'http://192.168.1.72:3000',
-        'Access-Control-Allow-Credentials': 'true'
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': token ? `Token ${token}` : ""
       }}
-      const url = `${baseUrl}api/products/`
+      const url = `${baseUrl}store/products/`
       let formData = new FormData();
       
       formData.append('name', productData.name)
@@ -139,7 +142,7 @@ function Products() {
             console.log("yyyyyyyyyyyyyy")
             console.log(res.data)
 
-            if (res.data?.status === "true") {
+            if (res.status == 201) {
               console.log("Buyer Added");
               toast.success("Successfully Added ");
               handleGetProductList();
@@ -216,7 +219,7 @@ function Products() {
 
 
   const handleChangeCategory = async (selectedOption) => {
-    setProductData({ ...productData, ["category"]: selectedOption.id });
+    setProductData({ ...productData, ["category"]: selectedOption.value });
   };
 
   //END ADDING NEW PRODUCT
@@ -256,7 +259,10 @@ function Products() {
   const handleDeleteProduct = async (id) => {
     await deleteProduct(id)
       .then((res) => {
-        if (res.data?.status === "true") {
+
+        console.log("deleted nowwwwww")
+        console.log(res)
+        if (res.status == 204 ) {
           handleGetProductList()
         } else {
         }
@@ -271,7 +277,7 @@ function Products() {
   const handleGetProductList = async () => {
 
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
+    console.log("1111111111")
     console.log(user)
     toast.success("Fetching Products!!", { autoClose: 2000 });
 
@@ -280,13 +286,16 @@ function Products() {
     setScreenLoading(true);
 
     try {
-      await getProducts(user.id)
+      await getProducts()
         .then((res) => {
-          console.log(res);
-          if (res.data?.status === "true") {
+          console.log("hhhhhh hhhh");
+          console.log(res.data);
+
+
+          if (res.data.length > 0) {
             console.log("Product List");
-            console.log(res.data.result);
-            setProductList(res.data.result);
+            console.log(res.data);
+            setProductList(res.data);
           } else {
             setProductList([]);
           }
@@ -313,15 +322,18 @@ function Products() {
     setScreenLoading(true);
 
     try {
-      await getCategories(user.id)
+      await getCategories()
         .then((res) => {
-          console.log(res);
-          if (res.data?.status === "true") {
+          console.log('jjjjjjj');
+          console.log(res.data);
+
+           if (res.data.length > 0) {
+          
 
             console.log("Category List");
-            console.log(res.data.result);
+            console.log(res.data);
 
-            res.data.result.map((item) => {
+            res.data.map((item) => {
               category_options.push({
                 value: item.name,
                 label: item.name,

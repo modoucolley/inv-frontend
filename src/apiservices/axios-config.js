@@ -12,7 +12,9 @@ const axiosConfig = axios.create({
 
 axiosConfig.interceptors.request.use(async function (config) {
   let token = localStorage.getItem("token");
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  console.log('Token')
+  console.log(token)
+  config.headers.Authorization = token ? `Token ${token}` : "";
   return config;
 });
 

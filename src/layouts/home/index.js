@@ -153,7 +153,7 @@ function Home() {
                     style={{backgroundColor: "#030305", fontSize: 10, paddingLeft: 10, paddingRight: 10}}
                     className="btn btn-sm  mb-0 me-1 mt-2 mt-md-0"
                   >
-                    {" Welcome " + user?.name}
+                    {" Welcome " + user?.first_name}
                   </p>
                 </li>
               )}
