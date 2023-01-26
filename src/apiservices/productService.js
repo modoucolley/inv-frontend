@@ -70,7 +70,7 @@ export const deleteProduct = async (id) => {
 
 export const editProduct = async (productData) => {
   const data = await axiosConfig
-    .put(`/store/products/${productData.id}`, productData)
+    .put(`/store/products/${productData.id}/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

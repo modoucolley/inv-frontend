@@ -76,11 +76,12 @@ function Products() {
     name: "",
     sortno: "",
     category: "",
+    sku: "",
     stock: "",
-    label: "",
+    description_color: "",
     price: "",
-    tags: "",
-    status: "In Stock",
+    label_size: "",
+    status: "in_stock",
   });
 
   const status_options = [
@@ -97,7 +98,7 @@ function Products() {
   ];
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     const user = JSON.parse(localStorage.getItem("user"));
     console.log("userssssssssssssss")
@@ -124,11 +125,12 @@ function Products() {
       
       formData.append('name', productData.name)
       formData.append('userid', user.id)
-      formData.append('label', productData.label)
+      formData.append('description_color', productData.description_color)
       formData.append('status', productData.status)
-      formData.append('tags', productData.tags)
+      formData.append('label_size', productData.label_size)
       formData.append('price', productData.price)
       formData.append('category', productData.category)
+      formData.append('sku', productData.sku)
       formData.append('sortno', productData.sortno)
       formData.append('stock', productData.stock)
       formData.append('image', productImage == null ? '' : productImage?.image[0])
@@ -225,7 +227,7 @@ function Products() {
   //END ADDING NEW PRODUCT
 
   const handleEdit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     const isValid = await AddProductSchema.isValid(productData);
     if (!isValid) {
@@ -356,6 +358,7 @@ function Products() {
   const columns = [
     { name: "product", align: "left" },
     { name: "category", align: "left" },
+    { name: "sku", align: "left" },
     { name: "stock", align: "left" },
     { name: "status", align: "center" },
     { name: "price", align: "center" },
@@ -385,7 +388,7 @@ function Products() {
               {item.name}
             </ArgonTypography>
             <ArgonTypography variant="caption" color="secondary">
-              {item.label}
+              {item.description_color}
             </ArgonTypography>
           </ArgonBox>
         </ArgonBox>
@@ -402,7 +405,15 @@ function Products() {
       category: (
         <ArgonBox display="flex" flexDirection="column">
           <ArgonTypography variant="caption" fontWeight="medium" color="text">
-            {item.category.name}
+            {item.category}
+          </ArgonTypography>
+          <ArgonTypography variant="caption" color="secondary"></ArgonTypography>
+        </ArgonBox>
+      ),
+      sku: (
+        <ArgonBox display="flex" flexDirection="column">
+          <ArgonTypography variant="caption" fontWeight="medium" color="text">
+            {item.sku}
           </ArgonTypography>
           <ArgonTypography variant="caption" color="secondary"></ArgonTypography>
         </ArgonBox>
@@ -523,10 +534,10 @@ function Products() {
                     sortno: "",
                     category: { id: "" },
                     stock: "",
-                    label: "",
+                    description_color: "",
                     price: "",
-                    tags: "",
-                    status: "In Stock",
+                    label_size: "",
+                    status: "in_stock",
                   })
 
                   setShowAddProductForm(!showAddProductForm)
@@ -598,15 +609,26 @@ function Products() {
                 </ArgonBox>
                 <ArgonBox mb={2} mx={5}>
                   <ArgonInput
-                    type="tags"
-                    name="tags"
-                    value={productData.tags}
-                    placeholder="Tags"
+                    type="label_size"
+                    name="label_size"
+                    value={productData.label_size}
+                    placeholder="Label/Size"
                     size="large"
                     onChange={handleChange}
                   />
                 </ArgonBox>
                 
+                <ArgonBox mb={2} mx={5}>
+                  <ArgonInput
+                    type="sku"
+                    name="sku"
+                    value={productData.sku}
+                    placeholder="SKU"
+                    size="large"
+                    onChange={handleChange}
+                  />
+                </ArgonBox>
+
 
 
                 <ArgonBox mb={2} mx={5}>
@@ -653,9 +675,9 @@ function Products() {
                 <ArgonBox mb={2} mx={5}>
                   <ArgonInput
                     type="name"
-                    name="label"
-                    value={productData.label}
-                    placeholder="Label"
+                    name="description_color"
+                    value={productData.description_color}
+                    placeholder="Description/Color"
                     size="large"
                     onChange={handleChange}
                   />

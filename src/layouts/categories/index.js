@@ -135,7 +135,7 @@ function Categories() {
       console.log(categoryData);
       await editCategoriee(categoryData.id, categoryData)
         .then((res) => {
-          if (res.data?.status === "true") {
+          if (res.status == 200 ) {
             console.log("category Updated");
             toast.success("category Updated Successfully");
             handleGetCategoryList()

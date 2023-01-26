@@ -137,7 +137,7 @@ function Home() {
               </li>
 
             
-              <li  className="nav-item my-auto ms-3 ms-lg-0">
+              {/* <li  className="nav-item my-auto ms-3 ms-lg-0">
                 <Link
                 style={{fontSize: 10, paddingLeft: 10, paddingRight: 10}}
                   to="/authentication/sign-up"
@@ -145,7 +145,7 @@ function Home() {
                 >
                   Register With Us
                 </Link>
-              </li>
+              </li> */}
 
               {user != null && (
                 <li className="nav-item my-auto ms-3 ms-lg-0">

@@ -35,7 +35,7 @@ export const addCategory = async (productData) => {
 
 export const editCategoriee = async (categorieId, categorieData) => {
   const data = await axiosConfig
-    .put(`/store/categories/${categorieId}`, categorieData)
+    .put(`/store/categories/${categorieId}/`, categorieData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

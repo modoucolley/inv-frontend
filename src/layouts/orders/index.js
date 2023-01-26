@@ -1481,9 +1481,9 @@ function Orders() {
                         </div>
                         <div style={{justifyContent: 'flex-end'}} className="col-lg-6 col-md-6 col-sm-6">
                           <address style={{textAlign: 'end'}} className="text-right">
-                            {user?.streetAddress}
+                            {user?.company_name}
                             <br />
-                            {user?.region}
+                            {user?.city}
                             <br />
                             {user?.contact}
                           </address>

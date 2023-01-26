@@ -37,17 +37,16 @@ function Cover() {
   //START LOGGING IN USER
   const [userData, setUserData] = useState({
     email: "",
+    username: "",
     password: "",
     contact: "",
-    companyname : "",
-    firstname : "",
-    lastname: "",
+    company_name : "",
+    first_name : "",
+    last_name: "",
     streetAddress: "",
     postcode: "",
     city: "",
-    region: "",
-    is_customer: true,
-   
+    region: "",   
   });
 
   const navigate = useNavigate();
@@ -65,42 +64,36 @@ function Cover() {
       console.log(userData);
       await registerUser(userData)
         .then(async(res) => {
-          if (res.data) {
 
-            console.log(res)
-            console.log(res)
-            if(res.data.message == 'success'){
-              console.log("User Registered Success");
-              console.log(res.data.status);
-              //toast.success("User Registered Successfully");
-              localStorage.removeItem("user")
-              localStorage.removeItem("token");
-              toast.success("Successful Sign Up", {
-                onClose: () => {
-                  navigate('/authentication/sign-in');
-                },
-                autoClose: 1000
-              });
-              
-            }
 
-            else{
-              console.log("User Could Not Be Registered");
-            console.log(res);
-            toast.error((res.data[Object.keys(res.data)[0]])[0]);
-            toast.error("User Could Not Be Registered");
-            }
+          console.log('yuuuuuuu')
+          console.log(res)
+
+          if(res.status == 201){
+            console.log("User Registered Success");
+            console.log(res.data.status);
+            //toast.success("User Registered Successfully");
+            localStorage.removeItem("user")
+            localStorage.removeItem("token");
+            toast.success("Successful Sign Up", {
+              onClose: () => {
+                navigate('/authentication/sign-in');
+              },
+              autoClose: 1000
+            });
             
-            
-          } else {
-            console.log("User Could Not Be Registered In");
-            console.log(res);
-            toast.error("User Could Not Be Registered");
           }
+
+        else{
+          toast.error("User Could Not Be Registered");
+        }
+
+        
         })
         .catch((err) => {
           console.log("Error");
           console.log(err);
+          toast.error("User Could Not Be Registered");
         });
     }
   };
@@ -143,13 +136,24 @@ function Cover() {
           <ArgonBox component="form" role="form">
 
 
-          <Grid container spacing={6}>
-          <Grid item xs={12} md={12}>
+          <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
           <ArgonBox mb={2}>
             <ArgonInput
-            name="companyname"
+            name="company_name"
             type="text"
             placeholder="Company Name"
+            size="large"
+            onChange={handleChange}
+          />
+            </ArgonBox>
+          </Grid>
+          <Grid item xs={12} md={6}>
+          <ArgonBox mb={2}>
+            <ArgonInput
+            name="username"
+            type="text"
+            placeholder="UserName"
             size="large"
             onChange={handleChange}
           />
@@ -162,7 +166,7 @@ function Cover() {
           <Grid item xs={12} md={6}>
           <ArgonBox mb={2}>
             <ArgonInput
-            name="firstname"
+            name="first_name"
             type="text"
             placeholder="First Name"
             size="large"
@@ -173,7 +177,7 @@ function Cover() {
           <Grid item xs={12} md={6}>
           <ArgonBox mb={2}>
             <ArgonInput
-            name="lastname"
+            name="last_name"
             type="text"
             placeholder="Last Name"
             size="large"
