@@ -18,7 +18,7 @@ export const getOrders = async (customerId) => {
 
 export const getOrderCount = async () => {
   const data = await axiosConfig
-    .get(`/api/ordercount/`)
+    .get(`/store/ordercount/`)
     .then((response) => {
       return response;
     })

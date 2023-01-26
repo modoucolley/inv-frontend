@@ -235,9 +235,6 @@ function Products() {
       console.log(productData);
     } else {
       console.log(productData);
-
-   
-
       await editProduct(productData)
         .then((res) => {
           if (res.data?.status === "true") {
@@ -461,7 +458,9 @@ function Products() {
             handleDeleteProduct(item.id);
           }}
         >
-          <ArgonBox component="i" color="info" fontSize="34px" className="ni ni-fat-remove" />
+          <ArgonBox component="i" color="red" fontSize="34px" className="ni ni-fat-remove" />
+
+          
         </Button>
       ),
     });

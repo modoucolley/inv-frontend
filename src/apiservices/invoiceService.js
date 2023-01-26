@@ -3,7 +3,7 @@ import axiosConfig from "./axios-config";
 
 export const getInvoices = async (customerId) => {
   const data = await axiosConfig
-    .get(`/api/invoices/customers/${customerId}`)
+    .get(`/store/invoices/`)
     .then((response) => {
       return response;
     })
@@ -18,7 +18,7 @@ export const getInvoices = async (customerId) => {
 
 export const getInvoiceCount = async () => {
   const data = await axiosConfig
-    .get(`/api/ordercount/`)
+    .get(`/store/invoicecount/`)
     .then((response) => {
       return response;
     })
@@ -33,7 +33,7 @@ export const getInvoiceCount = async () => {
 
 export const addInvoice = async (productData) => {
   const data = await axiosConfig
-    .post(`/api/orders/`, productData)
+    .post(`/store/invoices/`, productData)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -51,7 +51,7 @@ export const addInvoice = async (productData) => {
 
 export const deleteInvoice = async (id) => {
   const data = await axiosConfig
-    .delete(`/api/orders/${id}`)
+    .delete(`/store/invoices/${id}`)
     .then((response) => {
       console.log("Api Response")
       console.log(response)
@@ -70,7 +70,7 @@ export const deleteInvoice = async (id) => {
 
 export const editInvoice = async (id, data) => {
   const data1 = await axiosConfig
-    .put(`/api/invoices/${id}`, data)
+    .put(`/store/invoices/${id}`, data)
     .then((response) => {
       console.log("Api Response")
       console.log(response)

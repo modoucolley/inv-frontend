@@ -18,7 +18,7 @@ export const getSuppliers = async () => {
 
 export const getSupplierCount = async () => {
   const data = await axiosConfig
-    .get(`/api/suppliercount/`)
+    .get(`/store/suppliercount/`)
     .then((response) => {
       return response;
     })

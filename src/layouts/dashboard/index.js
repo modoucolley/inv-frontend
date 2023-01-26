@@ -64,10 +64,10 @@ function Default() {
       await getCategories()
         .then((res) => {
           console.log(res);
-          if (res.data?.status === "true") {
+          if (res.data.length > 0 ) {
             console.log("Category List");
-            console.log(res.data.result);
-            setCategoryList(res.data.result);
+            console.log(res.data);
+            setCategoryList(res.data);
           } else {
             setCategoryList([]);
           }
@@ -442,7 +442,7 @@ function Default() {
                   <ArgonTypography variant="button" color="text" fontWeight="medium">
                     {orderCount?.percentageIncrement}% more{" "}
                     <ArgonTypography variant="button" color="text" fontWeight="regular">
-                      in 2022
+                      in {new Date().getFullYear()}
                     </ArgonTypography>
                   </ArgonTypography>
                 </ArgonBox>

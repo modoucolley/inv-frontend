@@ -37,7 +37,7 @@ export const editBuyer = async (buyerId, buyerData) => {
 
 export const getBuyerCount = async () => {
   const data = await axiosConfig
-    .get(`/api/buyercount/`)
+    .get(`/store/buyercount/`)
     .then((response) => {
       return response;
     })

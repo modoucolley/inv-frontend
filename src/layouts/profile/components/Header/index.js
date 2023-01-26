@@ -13,6 +13,9 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { ToastContainer, toast } from "react-toastify";
+
+
 import { useState, useEffect } from "react";
 
 // @mui material components
@@ -40,9 +43,48 @@ function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
-  
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log(JSON.parse(localStorage.getItem("user")));
+
+  const [profile, setProfile] = useState()
+  const user = JSON.parse(localStorage.getItem("user"))
+  let token = localStorage.getItem("token");
+
+  console.log(user.profile)
+  console.log(token)
+  console.log(user.email)
+  console.log(user.email)
+
+  const updateCustomer = () => {
+
+
+    const uploadData = new FormData();
+    uploadData.append('profile', profile, profile.name)
+
+    console.log(token)
+    console.log(user.email)
+    console.log(user.email)
+
+    console.log(profile)
+    fetch(`http://localhost:8000/api/user/userdetails/${user.email}/`, {
+      method: 'PATCH',
+      headers: new Headers({
+        'Authorization': token ? `Token ${token}` : "",
+      }), 
+      body: uploadData,
+    })
+    .then(res => {
+      console.log(res)
+      if(res.status == 200 ){
+        toast.success("Company Logo Successfully Updated");
+      }
+      else{
+        toast.error("Upload Error");
+      }
+    })
+    .catch(error => console.log(error))
+
+  }
+
+
 
 
   useEffect(() => {
@@ -69,6 +111,9 @@ function Header() {
 
   return (
     <ArgonBox position="relative">
+
+      <ToastContainer />
+
       <DashboardNavbar absolute light />
       <ArgonBox height="220px" />
       <Card
@@ -81,7 +126,7 @@ function Header() {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <ArgonAvatar
-              src={burceMars}
+              src={`http://localhost:8000${user.profile}`}
               alt="profile-image"
               variant="rounded"
               size="xl"
@@ -117,7 +162,7 @@ function Header() {
                   }
                 /> */}
                 <Tab
-                  label="Settings"
+                  //onClick={}
                   icon={
                     <i
                       className="ni ni-settings-gear-65"
@@ -125,7 +170,18 @@ function Header() {
                     />
                   }
                 />
+
+                
+
+
               </Tabs>
+              <input type="file"
+              onChange={(e) => setProfile(e.target.files[0])}
+               />
+               <button className="upload__button" 
+               onClick={()=> updateCustomer()}> Upload</button>
+
+
             </AppBar>
           </Grid>
         </Grid>

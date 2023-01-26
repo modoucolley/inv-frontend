@@ -21,7 +21,7 @@ export const getProducts = async () => {
 
 export const getProductCount = async () => {
   const data = await axiosConfig
-    .get(`/api/productcount/`)
+    .get(`/store/productcount/`)
     .then((response) => {
       return response;
     })

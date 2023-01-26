@@ -449,7 +449,7 @@ function Orders() {
             handleDeleteOrder(item.id);
           }}
         >
-          <ArgonBox component="i" color="info" fontSize="34px" className="ni ni-fat-remove" />
+          <ArgonBox component="i" color="red" fontSize="34px" className="ni ni-fat-remove" />
         </Button>
       ),
     });
