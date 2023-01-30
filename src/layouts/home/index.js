@@ -70,7 +70,7 @@ function Home() {
   }, [pathname]);
 
   return (
-    <body className="about-us bg-gray-200">
+    <div className="about-us bg-gray-200">
       <ToastContainer />
 
       <nav className="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3  navbar-transparent ">
@@ -105,9 +105,9 @@ function Home() {
           >
             <ul className="navbar-nav navbar-nav-hover ms-auto">
                 <Link
-                  // onClick={() => {
-                  //   navigate("/dashboard");
-                  // }}
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
                   to="/dashboard"
                   className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                   id="dropdownMenuPages8"
@@ -120,12 +120,12 @@ function Home() {
 
               <li className="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
                 <Link
-                  to="/authentication/sign-in"
-                  // onClick={() => {
-                  //   localStorage.removeItem("user");
-                  //   localStorage.removeItem("token");
-                  //   navigate("/authentication/sign-in");
-                  // }}
+                  to=""
+                  onClick={() => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("token");
+                    navigate("/authentication/sign-in");
+                  }}
                   className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                   id="dropdownMenuPages8"
                   data-bs-toggle="dropdown"
@@ -666,7 +666,7 @@ function Home() {
           </div>
         </div>
       </footer>
-    </body>
+    </div>
   );
 }
 
