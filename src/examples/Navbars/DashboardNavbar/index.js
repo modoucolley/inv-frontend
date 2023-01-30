@@ -225,10 +225,13 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
               <IconButton
                 sx={navbarIconButton}
                 size="small"
-                onClick={() => {
-                  localStorage.removeItem("user");
-                  
+                
+                onClick={()=>{
+                  localStorage.removeItem("user")
+                  localStorage.removeItem("token");
+                  navigate('/authentication/sign-in');
                 }}
+
               >
                 <Icon
                   sx={({ palette: { dark, white } }) => ({
@@ -239,12 +242,7 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
                 </Icon>
                 <ArgonTypography
                 
-                onClick={()=>{
-                  localStorage.removeItem("user")
-                  localStorage.removeItem("token");
-                  navigate('/authentication/sign-in');
-                }}
-
+                
                   variant="button"
                   fontWeight="medium"
                   color={light && transparentNavbar ? "white" : "dark"}

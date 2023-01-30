@@ -20,6 +20,7 @@ import { loginUser } from "apiservices/authService";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { Routes, Route, Navigate, useLocation, } from "react-router-dom";
+import { getUserDetails } from "apiservices/userService";
 
 // Image
 const bgImage =
@@ -50,21 +51,41 @@ function Illustration() {
     } else {
       console.log(userData);
       await loginUser(userData)
-        .then((res) => {
+        .then(async (res) => {
 
           console.log('res')
           console.log(res.status)
           console.log(res.data)
           
           if (res.data.status == true) {
+            localStorage.setItem("token", res.data.token);
             console.log("User Logged In Successgggg hjgvwy");
             console.log(res.data.status);
-            toast.success("User Login Successfully");
+
+
+            try {
+              await getUserDetails(userData.email)
+                .then((res) => {
+                  console.log(res);
+                  if (res?.status == 200) {
+                    console.log("User Detail");
+                    console.log(res.data);
+                    localStorage.setItem("user", JSON.stringify(res.data));
+
+                  } else {
+                  }
+                })
+                .catch((err) => console.log("Error in Getting User Detail", err));
+                } catch (error) {
+              console.log(error);
+            }
+
             
             console.log(res.data.result);
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            setUser(res.data.user);
+            setUser(JSON.parse(localStorage.getItem("user")))
+            toast.success("User Login Successfully");
+
+            
           } else {
             console.log("User Could Not Be Logged In");
             console.log(res.data);

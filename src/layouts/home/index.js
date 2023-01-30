@@ -104,7 +104,6 @@ function Home() {
             id="navigation"
           >
             <ul className="navbar-nav navbar-nav-hover ms-auto">
-              <li className="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
                 <Link
                   onClick={() => {
                     navigate("/dashboard");
@@ -117,7 +116,6 @@ function Home() {
                   <i className="material-icons opacity-6 me-2 text-md">dashboard</i>
                   Dashboard
                 </Link>
-              </li>
 
               <li className="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
                 <Link
@@ -442,7 +440,7 @@ function Home() {
             </div>
             <div className="row justify-content-center text-center">
               <div className="col-md-3">
-                <h1 className="text-gradient text-info" id="state1" countTo="5234">
+                <h1 className="text-gradient text-info" id="state1">
                   0
                 </h1>
                 <h5>Projects</h5>
@@ -450,7 +448,7 @@ function Home() {
               </div>
               <div className="col-md-3">
                 <h1 className="text-gradient text-info">
-                  <span id="state2" countTo="3400">
+                  <span id="state2" >
                     0
                   </span>
                   +
@@ -460,7 +458,7 @@ function Home() {
               </div>
               <div className="col-md-3">
                 <h1 className="text-gradient text-info">
-                  <span id="state3" countTo="24">
+                  <span id="state3" >
                     0
                   </span>
                   /7

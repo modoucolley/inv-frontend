@@ -39,6 +39,7 @@ import breakpoints from "assets/theme/base/breakpoints";
 import './index.css';
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
+import { getUserDetails } from "apiservices/userService";
 
 function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -46,7 +47,11 @@ function Header() {
 
 
   const [profile, setProfile] = useState()
-  const user = JSON.parse(localStorage.getItem("user"))
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  console.log(JSON.parse(localStorage.getItem("user")));
+  
+  
   let token = localStorage.getItem("token");
 
   console.log(user.profile)
@@ -55,7 +60,6 @@ function Header() {
   console.log(user.email)
 
   const updateCustomer = () => {
-
 
     const uploadData = new FormData();
     uploadData.append('profile', profile, profile.name)
@@ -72,10 +76,26 @@ function Header() {
       }), 
       body: uploadData,
     })
-    .then(res => {
+    .then(async res => {
       console.log(res)
       if(res.status == 200 ){
         toast.success("Company Logo Successfully Updated");
+        try {
+          await getUserDetails(user.email)
+            .then((res) => {
+              console.log(res);
+              if (res?.status == 200) {
+                console.log("User Detail");
+                console.log(res.data);
+                localStorage.setItem("user", JSON.stringify(res.data));
+                setUser(JSON.parse(localStorage.getItem("user")))
+              } else {
+              }
+            })
+            .catch((err) => console.log("Error in Getting User Detail", err));
+            } catch (error) {
+          console.log(error);
+        }
       }
       else{
         toast.error("Upload Error");
@@ -140,7 +160,7 @@ function Header() {
           <Grid item>
             <div className="img-wrapper">
               <ArgonAvatar
-                src={`http://localhost:8000${user.profile}`}
+                src={`${user.profile}`}
                 alt="profile-image"
                 variant="rounded"
                 size="xl"
@@ -203,8 +223,6 @@ function Header() {
                   paddingBottom: 5
                 }}
                 onClick={()=> updateCustomer()}> Update Profile Picture</button>
-
-
             </AppBar>
           </Grid>
         </Grid>
