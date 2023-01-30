@@ -105,9 +105,10 @@ function Home() {
           >
             <ul className="navbar-nav navbar-nav-hover ms-auto">
                 <Link
-                  onClick={() => {
-                    navigate("/dashboard");
-                  }}
+                  // onClick={() => {
+                  //   navigate("/dashboard");
+                  // }}
+                  to="/dashboard"
                   className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                   id="dropdownMenuPages8"
                   data-bs-toggle="dropdown"
@@ -119,11 +120,12 @@ function Home() {
 
               <li className="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
                 <Link
-                  onClick={() => {
-                    localStorage.removeItem("user");
-                    localStorage.removeItem("token");
-                    navigate("/authentication/sign-in");
-                  }}
+                  to="/authentication/sign-in"
+                  // onClick={() => {
+                  //   localStorage.removeItem("user");
+                  //   localStorage.removeItem("token");
+                  //   navigate("/authentication/sign-in");
+                  // }}
                   className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                   id="dropdownMenuPages8"
                   data-bs-toggle="dropdown"
