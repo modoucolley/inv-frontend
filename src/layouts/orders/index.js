@@ -1531,9 +1531,9 @@ function Orders() {
                                         {row.name}
                                         <p className="m-0 text-muted">{row.label}</p>
                                       </td>
-                                      <td>${row.price}</td>
+                                      <td>D{row.price}</td>
                                       <td>{row.quantity}</td>
-                                      <td>${row.price * row.quantity}</td>
+                                      <td>D{row.price * row.quantity}</td>
                                     </tr>
                                   );
                                 })}
@@ -1557,7 +1557,7 @@ function Orders() {
 															$49.00<br/>
 														</p> */}
                                     <h5 className="text-success">
-                                      <strong>${ordertotalPrice}</strong>
+                                      <strong>D{ordertotalPrice}</strong>
                                     </h5>
                                   </td>
                                 </tr>

@@ -36,6 +36,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // Argon Dashboard 2 MUI base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
+import './index.css';
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
 
@@ -109,6 +110,18 @@ function Header() {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
+
+  const divStyle = {
+    margin: '40px',
+    border: '5px solid pink'
+  };
+  const pStyle = {
+    fontSize: '15px',
+    textAlign: 'center'
+  };
+
+
+
   return (
     <ArgonBox position="relative">
 
@@ -125,13 +138,16 @@ function Header() {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <ArgonAvatar
-              src={`http://localhost:8000${user.profile}`}
-              alt="profile-image"
-              variant="rounded"
-              size="xl"
-              shadow="sm"
-            />
+            <div className="img-wrapper">
+              <ArgonAvatar
+                src={`http://localhost:8000${user.profile}`}
+                alt="profile-image"
+                variant="rounded"
+                size="xl"
+                shadow="sm"
+                className="hover-zoom"
+              />
+              </div>
           </Grid>
           <Grid item>
             <ArgonBox height="100%" mt={0.5} lineHeight={1}>
@@ -143,9 +159,9 @@ function Header() {
               </ArgonTypography>
             </ArgonBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
+          <Grid item xs={8} md={5} lg={4} sx={{ ml: "auto" }}>
             <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
+              {/* <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}> */}
                 {/* <Tab
                   label="App"
                   icon={
@@ -161,7 +177,7 @@ function Header() {
                     />
                   }
                 /> */}
-                <Tab
+                {/* <Tab
                   //onClick={}
                   icon={
                     <i
@@ -169,17 +185,24 @@ function Header() {
                       style={{ marginTop: "6px", marginRight: "8px" }}
                     />
                   }
-                />
-
-                
-
-
-              </Tabs>
-              <input type="file"
-              onChange={(e) => setProfile(e.target.files[0])}
+                /> */}
+              {/* </Tabs> */}
+              <input 
+                className="upload-input"
+                type="file"
+                onChange={(e) => setProfile(e.target.files[0])}
                />
-               <button className="upload__button" 
-               onClick={()=> updateCustomer()}> Upload</button>
+               <button 
+                style={{
+                  fontSize: 15,
+                  border: 0,
+                  backgroundColor: '#3a4e9e',
+                  marginTop: 10,
+                  color: 'white',
+                  paddingTop: 5,
+                  paddingBottom: 5
+                }}
+                onClick={()=> updateCustomer()}> Update Profile Picture</button>
 
 
             </AppBar>
