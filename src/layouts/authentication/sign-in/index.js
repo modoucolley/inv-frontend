@@ -42,34 +42,26 @@ function Illustration() {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     const isValid = await UserSchema.isValid(userData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(userData);
     } else {
-      console.log(userData);
       await loginUser(userData)
         .then(async (res) => {
 
-          console.log('res')
-          console.log(res.status)
-          console.log(res.data)
+        
           
           if (res.data.status == true) {
             localStorage.setItem("token", res.data.token);
-            console.log("User Logged In Successgggg hjgvwy");
-            console.log(res.data.status);
 
 
             try {
               await getUserDetails(userData.email)
                 .then((res) => {
-                  console.log(res);
                   if (res?.status == 200) {
-                    console.log("User Detail");
-                    console.log(res.data);
+                   
                     localStorage.setItem("user", JSON.stringify(res.data));
 
                   } else {
@@ -81,19 +73,15 @@ function Illustration() {
             }
 
             
-            console.log(res.data.result);
             setUser(JSON.parse(localStorage.getItem("user")))
             toast.success("User Login Successfully");
 
             
           } else {
-            console.log("User Could Not Be Logged In");
-            console.log(res.data);
             toast.error("User Could Not Be Logged In");
           }
         })
         .catch((err) => {
-          console.log("Error");
           console.log(err);
         });
     }

@@ -87,7 +87,6 @@ function Invoices() {
   // USER VARIABLES
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   console.log(JSON.parse(localStorage.getItem("user")));
-  console.log(user);
 
   const componentRef = useRef();
 
@@ -116,16 +115,12 @@ function Invoices() {
     setScreenLoading(true);
 
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
-    console.log(user)
 
     try {
       await getInvoices(user.id)
         .then((res) => {
-          console.log(res);
+          
           if (res.data?.status === "true") {
-            console.log("Order List");
-            console.log(res.data.result);
             setOrderList(res.data.result);
           } else {
             setOrderList([]);
@@ -145,14 +140,12 @@ function Invoices() {
     try {
       await getProducts()
         .then((res) => {
-          console.log(res);
+          
           if (res.data?.status === "true") {
-            console.log("Product List");
-            console.log(res.data.result);
+  
 
             res.data.result.map((item) => {
-              console.log("Single Product");
-              console.log(item.price);
+             
               product_options.push({
                 value: item.name,
                 label: item.name,
@@ -181,11 +174,9 @@ function Invoices() {
     try {
       await getSuppliers()
         .then((res) => {
-          console.log(res);
+          
           if (res.data?.status === "true") {
-            console.log("Suppliers List");
             res.data.result.map((item) => {
-              console.log(item);
               supplier_options.push({
                 value: item.companyName,
                 label: item.companyName,
@@ -212,11 +203,8 @@ function Invoices() {
     try {
       await getBuyers()
         .then((res) => {
-          console.log(res);
+          
           if (res.data?.status === "true") {
-            console.log("Buyer List");
-            console.log(res.data.result);
-
             res.data.result.map((item) => {
               buyer_options.push({
                 value: item.name,
@@ -239,17 +227,13 @@ function Invoices() {
   };
 
   const handleEdit = async (id) => {
-    console.log(invoiceData);
     await editInvoice(id, invoiceData)
       .then((res) => {
         if (res.data?.status === "true") {
-          console.log("Supplier Updated");
           toast.success("Invoice added as an Order Successfully");
           handleGetInvoiceList();
-          console.log(res.data.result);
+
         } else {
-          console.log("Supplier Could Not Be Updated");
-          console.log(res.data.result);
           toast.error("Invoice Could Not Be Updated");
         }
       })
@@ -411,14 +395,10 @@ function Invoices() {
             setShowAddForm(false);
             setShowInvoiceTable(false);
 
-            console.log(item);
-            //setOrderData(item);
             setProductInputRow(item.products);
             setOrderTotalPrice(0);
-            //setViewOrderActive(true);
 
-            console.log("view ");
-            console.log(item.products);
+          
 
             setOrderTotalPrice(item.total_price);
             setTheBuyer(item.buyer);
@@ -461,17 +441,8 @@ function Invoices() {
 
   const renderColumns = productInputRow.map(({ row, amount }, key) => {
     const handleChangeOtherProduct = async (selectedOption) => {
-      console.log("THE CURRENT TOTAL ORDER PRICE");
-      console.log(ordertotalPrice);
 
-      console.log("ID");
-      console.log(selectedOption.value);
-      console.log("row");
-      console.log(row);
-      console.log(amount);
-      console.log(productInputRow[row]);
 
-      console.log("ttttttttt");
       if (otherProducts[row] == undefined) {
         setOtherProducts((current) => [
           ...current,
@@ -587,47 +558,25 @@ function Invoices() {
             <Button
               style={{ flex: 1, alignSelf: "center" }}
               onClick={async () => {
-                console.log("current total price 1");
-                console.log(ordertotalPrice);
+                
 
                 if (otherProducts[row] == undefined) {
                   toast.error("Please Choose a Product!!");
                 } else {
-                  console.log("THE CURRENT TOTAL ORDER PRICE");
-                  console.log(ordertotalPrice);
-
-                  console.log("THE SECOND ROW");
-                  console.log(
-                    (productInputRow[row].amount + 1) * productInputRow[row].productprice
-                  );
+                  
 
                   setOrderTotalPrice(
                     parseFloat(ordertotalPrice) + parseFloat(productInputRow[row].productprice)
                   );
 
-                  // setOrderTotalPrice( ((productInputRow[row].amount - 1) * (productInputRow[row].productprice)) + (ordertotalPrice ));
+                  
 
-                  //setQuantity(quantity + 1);
-
-                  console.log("Editing amount for the specific row : ");
-                  console.log(row);
-                  //setOtherProducts((current) => [...current, { id: selectedOption.id }]);
-
-                  //setProductInputRow(productInputRow.filter((a) => a.name !== name));
-
-                  console.log("Product Input Row");
-                  console.log(productInputRow);
-
-                  console.log("otherProducts");
-                  console.log(otherProducts);
 
                   const filtered = otherProducts.filter((entry) => entry.row === row);
 
-                  console.log("filtered");
-                  console.log(filtered);
+                  
 
                   const newState = productInputRow.map((obj) => {
-                    // 👇️ if id equals 2, update country property
 
                     if (obj.row == row) {
                       return {
@@ -680,7 +629,6 @@ function Invoices() {
           <Button
             style={{}}
             onClick={async () => {
-              console.log(productInputRow);
               setProductInputRow((current) => [...current, { row: idProductRow, amount: 0 }]);
               setIdProductRow(idProductRow + 1);
             }}
@@ -692,14 +640,10 @@ function Invoices() {
           <Button
             style={{}}
             onClick={async () => {
-              console.log("productInputRow");
-              console.log(productInputRow);
-              console.log("otherproducts");
-              console.log(otherProducts);
+              
               setProductInputRow(productInputRow.filter((a) => a.row !== row));
               setOtherProducts(otherProducts.filter((a) => a.row !== row));
 
-              console.log();
               setOrderTotalPrice(
                 parseFloat(ordertotalPrice) - parseFloat(productInputRow[row].productprice)
               );
@@ -713,7 +657,7 @@ function Invoices() {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     let resTopics = [
       {
@@ -739,25 +683,19 @@ function Invoices() {
       ["total_price"]: ordertotalPrice,
     });
 
-    //console.log(otherProducts)
 
     handleOpen();
-    //handleComfirm();
   };
 
   const handleComfirm = async () => {
     const isValid = await AddOrderSchema.isValid(orderData);
-    console.log("Order Data");
-    console.log(orderData);
+    
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(orderData);
     } else {
-      console.log(orderData);
       await addOrder(orderData)
         .then((res) => {
           if (res.data?.status === "true") {
-            console.log("Order Added");
             toast.success("Order Added Successfully");
             setOrderData({
               buyer: "",
@@ -773,10 +711,8 @@ function Invoices() {
             setProductInputRow([]);
             setOpen(false);
             handleGetOrderList();
-            console.log(res.data.result);
-          } else {
-            console.log("Order Could Not Be Added");
-            console.log(res.data.result);
+  
+          } else {  
             toast.error("Order Could Not Be Added");
             setOpen(false);
           }

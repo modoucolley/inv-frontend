@@ -57,9 +57,6 @@ function Home() {
   const [controller, dispatch] = useArgonController();
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log(JSON.parse(localStorage.getItem("user")));
-
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -566,11 +563,11 @@ function Home() {
                 <h6 className="text-sm">Company</h6>
                 <ul className="flex-column ms-n3 nav">
                   <li className="nav-item">
-                    <a className="nav-link" href="https://www.creative-tim.com/presentation">
+                    <Link className="nav-link" to="/home">
                       About Us
-                    </a>
+                    </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a className="nav-link" href="https://www.creative-tim.com/templates/free">
                       Freebies
                     </a>
@@ -584,11 +581,11 @@ function Home() {
                     <a className="nav-link" href="https://www.creative-tim.com/blog">
                       Blog
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
-            <div className="col-md-2 col-sm-6 col-6 mb-4">
+            {/* <div className="col-md-2 col-sm-6 col-6 mb-4">
               <div>
                 <h6 className="text-sm">Resources</h6>
                 <ul className="flex-column ms-n3 nav">
@@ -609,7 +606,7 @@ function Home() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
             <div className="col-md-2 col-sm-6 col-6 mb-4">
               <div>
                 <h6 className="text-sm">Help & Support</h6>

@@ -40,11 +40,9 @@ import Typography from "@mui/material/Typography";
 import { useReactToPrint } from "react-to-print";
 import { SignalCellularNull } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
-import { Routes, Route, Navigate, useLocation, } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-import { useNavigate } from 'react-router-dom';
-
-
+import { useNavigate } from "react-router-dom";
 
 import "./index.css";
 
@@ -74,10 +72,6 @@ function Orders() {
   const [uuid, setUuid] = useState(uuidv4().toString());
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log(JSON.parse(localStorage.getItem("user")));
-
-  console.log(user)
-
 
   const componentRef = useRef();
 
@@ -89,9 +83,7 @@ function Orders() {
     return <div ref={ref}>My cool content here!</div>;
   });
 
-
   const navigate = useNavigate();
-
 
   const style = {
     position: "absolute",
@@ -106,13 +98,9 @@ function Orders() {
   };
 
   const handleGetOrderList = async () => {
-
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
-    console.log(user)
 
     toast.success("Fetching Orders!!", { autoClose: 2000 });
-
 
     setOrderList([]);
     setScreenLoading(true);
@@ -120,10 +108,7 @@ function Orders() {
     try {
       await getOrders(user.id)
         .then((res) => {
-          console.log(res);
           if (res.data?.status === "true") {
-            console.log("Order List");
-            console.log(res.data.result);
             setOrderList(res.data.result);
           } else {
             setOrderList([]);
@@ -139,21 +124,13 @@ function Orders() {
 
   //START GET PRODUCTS
   const handleGetProductList = async () => {
-
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
-    console.log(user)
-
 
     setProductList([]);
     try {
       await getProducts()
         .then((res) => {
-          console.log(res);
-          if (res.data.length > 0)  {
-            console.log("Product List");
-            console.log(res.data);
-
+          if (res.data.length > 0) {
             res.data.map((item) => {
               product_options.push({
                 value: item.name,
@@ -164,7 +141,6 @@ function Orders() {
             });
 
             setProductOptions(product_options);
-            
           } else {
             setProductList([]);
           }
@@ -184,11 +160,8 @@ function Orders() {
     try {
       await getSuppliers()
         .then((res) => {
-          console.log(res);
           if (res.data?.status === "true") {
-            console.log("Suppliers List");
             res.data.result.map((item) => {
-              console.log(item);
               supplier_options.push({
                 value: item.companyName,
                 label: item.companyName,
@@ -215,11 +188,7 @@ function Orders() {
     try {
       await getBuyers()
         .then((res) => {
-          console.log(res);
           if (res.data?.status === "true") {
-            console.log("Buyer List");
-            console.log(res.data.result);
-
             res.data.result.map((item) => {
               buyer_options.push({
                 value: item.name,
@@ -319,6 +288,7 @@ function Orders() {
   };
 
   const handleChangeAmount = async (e) => {
+    
     setOrderData({
       ...orderData,
       ["amount"]: e.target.value,
@@ -404,15 +374,7 @@ function Orders() {
           {item.status}
         </ArgonTypography>
       ),
-      /*  "print receipt": (
-        <Button
-          onClick={async () => {
-            handleDeleteOrder(item.id);
-          }}
-        >
-          <ArgonBox component="i" color="info" fontSize="25px" className="ni ni-folder-17" />
-        </Button>
-      ), */
+
       "View & Print": (
         <Button
           onClick={async () => {
@@ -420,22 +382,14 @@ function Orders() {
             setShowAddForm(false);
             setShowOrderTable(false);
 
-            console.log(item);
             setOrderData(item);
             setProductInputRow(item.products);
             setOrderTotalPrice(0);
             setViewOrderActive(true);
 
-            
-
-            console.log("view ");
-            console.log(item.products);
-
-          
-
             setOrderTotalPrice(item.total_price);
-            setTheBuyer(item.buyer)
-            setTheReceipt(item.receipt)
+            setTheBuyer(item.buyer);
+            setTheReceipt(item.receipt);
 
             //setIdProductRow(0 + 1);
           }}
@@ -463,17 +417,6 @@ function Orders() {
 
   const renderColumns = productInputRow.map(({ row, amount }, key) => {
     const handleChangeOtherProduct = async (selectedOption) => {
-      console.log("THE CURRENT TOTAL ORDER PRICE");
-      console.log(ordertotalPrice);
-
-      console.log("ID");
-      console.log(selectedOption.value);
-      console.log("row");
-      console.log(row);
-      console.log(amount);
-      console.log(productInputRow[row]);
-
-      console.log("ttttttttt");
       if (otherProducts[row] == undefined) {
         setOtherProducts((current) => [
           ...current,
@@ -487,8 +430,6 @@ function Orders() {
         ]);
 
         const newState = productInputRow.map((obj) => {
-          // 👇️ if id equals 2, update country property
-
           if (obj.row == row) {
             return {
               ...obj,
@@ -500,51 +441,37 @@ function Orders() {
             return { ...obj };
           }
 
-          // 👇️ otherwise return object as is
           return obj;
         });
 
         setProductInputRow(newState);
         setOrderTotalPrice(parseFloat(ordertotalPrice) + parseFloat(selectedOption.price));
       } else {
-        console.log("guuu");
-        console.log(productInputRow[row].price);
         const currentprice = productInputRow[row].price;
 
         const newState1 = productInputRow.map((obj) => {
-          // 👇️ if id equals 2, update country property
-
           if (obj.row == row) {
             return { ...obj, price: productInputRow[row].amount * selectedOption.price };
           } else {
             return { ...obj };
           }
 
-          // 👇️ otherwise return object as is
           return obj;
         });
 
         setProductInputRow(newState1);
 
         const newState = otherProducts.map((obj) => {
-          // 👇️ if id equals 2, update country property
-
           if (obj.row == row) {
             return { ...obj, id: selectedOption.id, price: selectedOption.price };
           } else {
             return { ...obj };
           }
 
-          // 👇️ otherwise return object as is
           return obj;
         });
 
         setOtherProducts(newState);
-
-        console.log("ordertooo");
-        console.log(ordertotalPrice);
-        console.log(currentprice);
-        console.log(selectedOption.price);
 
         setOrderTotalPrice(
           parseFloat(ordertotalPrice) -
@@ -584,20 +511,11 @@ function Orders() {
             defaultValue={productOptions[productInputRow[row]?.id]}
             options={productOptions}
             onChange={async (selectedOption) => {
-              console.log("product input rows");
-              console.log(productInputRow);
-              console.log(otherProducts);
-
               const currentordertotalPrice = isNaN(ordertotalPrice)
                 ? 0 + firstProductTotalPrice
                 : ordertotalPrice;
 
               if (otherProducts[row] == undefined || productInputRow[row].amount == undefined) {
-                console.log("Total Order Price");
-                console.log(currentordertotalPrice);
-                console.log("First Row Total Order Price");
-                console.log(firstProductTotalPrice);
-
                 setOtherProducts((current) => [
                   ...current,
                   {
@@ -627,13 +545,6 @@ function Orders() {
                   parseFloat(currentordertotalPrice) + parseFloat(selectedOption.price)
                 );
               } else {
-                console.log("Total Order Price");
-                console.log(currentordertotalPrice);
-                console.log("First Row Total Order Price");
-                console.log(firstProductTotalPrice);
-                console.log("Current Row Total Order Price Before Change");
-                console.log(productInputRow[row].price);
-
                 setOrderTotalPrice(
                   parseFloat(currentordertotalPrice) -
                     productInputRow[row].price +
@@ -673,49 +584,16 @@ function Orders() {
               style={{ flex: 1, alignSelf: "center" }}
               onClick={async () => {
                 if (productInputRow[row].amount > 1) {
-                  console.log("current total price 1");
-                  console.log(ordertotalPrice);
-
-                  console.log("yyyyyyyyyyyyyyyyyyyyyyy");
-                  console.log(otherProducts);
-
                   if (otherProducts[row] == undefined) {
                     toast.error("Please Choose a Product!!");
                   } else {
-                    console.log("THE CURRENT TOTAL ORDER PRICE");
-                    console.log(ordertotalPrice);
-
-                    console.log("THE SECOND ROW");
-                    console.log(productInputRow[row].productprice);
-
                     setOrderTotalPrice(
                       parseFloat(ordertotalPrice) - parseFloat(productInputRow[row].productprice)
                     );
 
-                    // setOrderTotalPrice( ((productInputRow[row].amount - 1) * (productInputRow[row].productprice)) + (ordertotalPrice ));
-
-                    //setQuantity(quantity + 1);
-
-                    console.log("Editing amount for the specific row : ");
-                    console.log(row);
-                    //setOtherProducts((current) => [...current, { id: selectedOption.id }]);
-
-                    //setProductInputRow(productInputRow.filter((a) => a.name !== name));
-
-                    console.log("Product Input Row");
-                    console.log(productInputRow);
-
-                    console.log("otherProducts");
-                    console.log(otherProducts);
-
                     const filtered = otherProducts.filter((entry) => entry.row === row);
 
-                    console.log("filtered");
-                    console.log(filtered);
-
                     const newState = productInputRow.map((obj) => {
-                      // 👇️ if id equals 2, update country property
-
                       if (obj.row == row) {
                         return {
                           ...obj,
@@ -727,22 +605,17 @@ function Orders() {
                         return { ...obj };
                       }
 
-                      // 👇️ otherwise return object as is
                       return obj;
                     });
 
                     setProductInputRow(newState);
 
                     const newState1 = otherProducts.map((obj) => {
-                      // 👇️ if id equals 2, update country property
-
                       if (obj.row == row) {
                         return { ...obj, amount: productInputRow[row].amount - 1 };
                       } else {
                         return { ...obj };
                       }
-
-                      // 👇️ otherwise return object as is
                       return obj;
                     });
                     setOtherProducts(newState1);
@@ -764,48 +637,16 @@ function Orders() {
             <Button
               style={{ flex: 1, alignSelf: "center" }}
               onClick={async () => {
-                console.log("current total price 1");
-                console.log(ordertotalPrice);
-
                 if (otherProducts[row] == undefined) {
                   toast.error("Please Choose a Product!!");
                 } else {
-                  console.log("THE CURRENT TOTAL ORDER PRICE");
-                  console.log(ordertotalPrice);
-
-                  console.log("THE SECOND ROW");
-                  console.log(
-                    (productInputRow[row].amount + 1) * productInputRow[row].productprice
-                  );
-
                   setOrderTotalPrice(
                     parseFloat(ordertotalPrice) + parseFloat(productInputRow[row].productprice)
                   );
 
-                  // setOrderTotalPrice( ((productInputRow[row].amount - 1) * (productInputRow[row].productprice)) + (ordertotalPrice ));
-
-                  //setQuantity(quantity + 1);
-
-                  console.log("Editing amount for the specific row : ");
-                  console.log(row);
-                  //setOtherProducts((current) => [...current, { id: selectedOption.id }]);
-
-                  //setProductInputRow(productInputRow.filter((a) => a.name !== name));
-
-                  console.log("Product Input Row");
-                  console.log(productInputRow);
-
-                  console.log("otherProducts");
-                  console.log(otherProducts);
-
                   const filtered = otherProducts.filter((entry) => entry.row === row);
 
-                  console.log("filtered");
-                  console.log(filtered);
-
                   const newState = productInputRow.map((obj) => {
-                    // 👇️ if id equals 2, update country property
-
                     if (obj.row == row) {
                       return {
                         ...obj,
@@ -872,12 +713,6 @@ function Orders() {
         <div style={{ alignSelf: "center", flex: 1 }}>
           <Button
             onClick={async () => {
-              console.log(productInputRow);
-              console.log(otherProducts);
-              console.log("The Current Active Row");
-              console.log(row);
-              console.log("The Price To Be Removed from Total Price");
-              console.log(productInputRow[row].price);
               if (productInputRow[row]?.price != undefined) {
                 setOrderTotalPrice(parseFloat(ordertotalPrice) - productInputRow[row]?.price);
               }
@@ -898,8 +733,6 @@ function Orders() {
                 }
                 i = i + 1;
               });
-              console.log("New Product Input Row");
-              console.log(newProductInputRow);
 
               newProductInputRow.map((obj) => {
                 newProductInputRowUpdated.push({
@@ -911,8 +744,6 @@ function Orders() {
                 j = j + 1;
               });
 
-              console.log("New Product Input Row Updated");
-              console.log(newProductInputRowUpdated);
               setProductInputRow(newProductInputRowUpdated);
 
               const newotherProducts = [];
@@ -932,8 +763,6 @@ function Orders() {
                 }
                 x = x + 1;
               });
-              console.log("New Other Products Input Row");
-              console.log(newotherProducts);
 
               newotherProducts.map((obj) => {
                 newotherProductsUpdated.push({
@@ -946,8 +775,6 @@ function Orders() {
                 j = j + 1;
               });
 
-              console.log("New Other Products Input Row Updated");
-              console.log(newotherProductsUpdated);
               setOtherProducts(newotherProductsUpdated);
             }}
           >
@@ -962,10 +789,7 @@ function Orders() {
     //e.preventDefault();
 
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
-    console.log(user)
 
-    
     let resTopics = [
       {
         id: firstProductId,
@@ -991,7 +815,6 @@ function Orders() {
       ["type"]: "order",
       ["status"]: "pending",
       ["userid"]: user.id,
-      
     });
 
     setInvoiceData({
@@ -1003,28 +826,19 @@ function Orders() {
       ["userid"]: user.id,
     });
 
-    //console.log(otherProducts)
-
     handleOpen();
-    //handleComfirm();
   };
 
   const handleComfirm = async () => {
     const isValid = await AddOrderSchema.isValid(orderData);
-    console.log("Order Data");
-    console.log(orderData);
+
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(orderData);
     } else {
-      console.log(orderData);
       toast.success("Adding Order!!");
       await addOrder(orderData)
         .then((res) => {
-          console.log("Response");
-          console.log(res.data);
           if (res.data?.status === "true") {
-            console.log("Order Added");
             toast.success(" Successfully Added");
 
             setFirstProductId("");
@@ -1044,14 +858,9 @@ function Orders() {
             setShowOrderTable(true);
             setOpen(false);
             handleGetOrderList();
-            console.log(res.data.result);
           } else {
-            console.log("Order Could Not Be Added");
-            console.log(res.data.result);
             toast.error("Order Could Not Be Added");
             setOpen(false);
-
-            
           }
         })
         .catch((err) => {
@@ -1063,19 +872,14 @@ function Orders() {
 
   const handleComfirmInvoice = async () => {
     const isValid = await AddOrderSchema.isValid(orderData);
-    console.log("invoice Data");
-    console.log(invoiceData);
+
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(invoiceData);
     } else {
       toast.success("Adding Invoice!!");
-
-      console.log(invoiceData);
       await addOrder(invoiceData)
         .then((res) => {
           if (res.data?.status === "true") {
-            console.log("Order Added");
             toast.success("Order Added Successfully");
             setOrderData({
               buyer: "",
@@ -1094,11 +898,8 @@ function Orders() {
             setOtherProducts([]);
             setOpen(false);
             handleGetOrderList();
-            console.log(res.data.result);
-            navigate('/invoices');
+            navigate("/invoices");
           } else {
-            console.log("Order Could Not Be Added");
-            console.log(res.data.result);
             toast.error("Order Could Not Be Added");
             setOpen(false);
           }
@@ -1121,13 +922,9 @@ function Orders() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  
-
   return (
     <DashboardLayout>
       {user == null && <Navigate to="/authentication/sign-in" replace={true} />}
-
-
 
       <ToastContainer />
 
@@ -1424,63 +1221,61 @@ function Orders() {
 
       {showPrintView && (
         <div className="container">
-          
           <div className="row gutters">
-              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                <div style={{justifyContent: 'flex-start'}} className="custom-actions-btns mb-2">
-                 
-                  <a
-                    onClick={() => {
-                      setShowPrintView(false);
-                      setShowAddForm(false);
-                      setShowOrderTable(true);
-                    }}
-                    className="btn btn-secondary"
-                  >
-                    <i className="icon-printer"></i> Show Order Table
-                  </a>
-                </div>
-                
-              </div>
-              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                <div className="custom-actions-btns mb-2">
-                  <a
-                    onClick={() => {
-                      handlePrint();
-                    }}
-                    className="btn btn-primary"
-                  >
-                    <i className="icon-download"></i> Download
-                  </a>
-                  <a
-                    onClick={() => {
-                      toast.success("Loading Printer!!");
-                      handlePrint();
-                    }}
-                    className="btn btn-secondary"
-                  >
-                    <i className="icon-printer"></i> Print
-                  </a>
-                </div>
-                
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+              <div style={{ justifyContent: "flex-start" }} className="custom-actions-btns mb-2">
+                <a
+                  onClick={() => {
+                    setShowPrintView(false);
+                    setShowAddForm(false);
+                    setShowOrderTable(true);
+                  }}
+                  className="btn btn-secondary"
+                >
+                  <i className="icon-printer"></i> Show Order Table
+                </a>
               </div>
             </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+              <div className="custom-actions-btns mb-2">
+                <a
+                  onClick={() => {
+                    handlePrint();
+                  }}
+                  className="btn btn-primary"
+                >
+                  <i className="icon-download"></i> Download
+                </a>
+                <a
+                  onClick={() => {
+                    toast.success("Loading Printer!!");
+                    handlePrint();
+                  }}
+                  className="btn btn-secondary"
+                >
+                  <i className="icon-printer"></i> Print
+                </a>
+              </div>
+            </div>
+          </div>
 
-          <div style={{marginTop: 20}} ref={componentRef} className="row gutters">
+          <div style={{ marginTop: 20 }} ref={componentRef} className="row gutters">
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className="card">
                 <div className="card-body p-0">
                   <div className="invoice-container">
                     <div className="invoice-header">
-                      
                       <div className="row gutters">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                           <a href="index.html" className="invoice-logo">
                             GoMindz Inventory
                           </a>
                         </div>
-                        <div style={{justifyContent: 'flex-end'}} className="col-lg-6 col-md-6 col-sm-6">
-                          <address style={{textAlign: 'end'}} className="text-right">
+                        <div
+                          style={{ justifyContent: "flex-end" }}
+                          className="col-lg-6 col-md-6 col-sm-6"
+                        >
+                          <address style={{ textAlign: "end" }} className="text-right">
                             {user?.company_name}
                             <br />
                             {user?.city}
@@ -1524,7 +1319,6 @@ function Orders() {
                               </thead>
                               <tbody>
                                 {productInputRow?.map((row, i) => {
-                                  
                                   return (
                                     <tr key={row}>
                                       <td>

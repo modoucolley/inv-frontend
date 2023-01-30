@@ -53,26 +53,16 @@ function Cover() {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     const isValid = await RegisterUserSchema.isValid(userData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-   
-      console.log(userData);
-    } else {
-      console.log(userData);
+       } else {
       await registerUser(userData)
         .then(async(res) => {
 
-
-          console.log('yuuuuuuu')
-          console.log(res)
-
           if(res.status == 201){
-            console.log("User Registered Success");
-            console.log(res.data.status);
-            //toast.success("User Registered Successfully");
             localStorage.removeItem("user")
             localStorage.removeItem("token");
             toast.success("Successful Sign Up", {
@@ -86,13 +76,12 @@ function Cover() {
 
         else{
           toast.error("User Could Not Be Registered");
+          toast.error(JSON.stringify(res.data));
         }
 
         
         })
         .catch((err) => {
-          console.log("Error");
-          console.log(err);
           toast.error("User Could Not Be Registered");
         });
     }

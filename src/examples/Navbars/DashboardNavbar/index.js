@@ -71,19 +71,13 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
 
   const navigate = useNavigate();
 
-
-  
-  console.log("object")
-  console.log(data)
-
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
   const [token, setToken] = useState(localStorage.getItem("token"));
-  console.log("Token")
-  console.log(token)
+
 
   useEffect(() => {
     // Setting the navbar type
@@ -198,10 +192,6 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
               <IconButton
                 sx={navbarIconButton}
                 size="small"
-                onClick={() => {
-                  localStorage.removeItem("user");
-                  
-                }}
               >
                 <Icon
                   sx={({ palette: { dark, white } }) => ({
@@ -211,9 +201,6 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
                   account_circle
                 </Icon>
                 <ArgonTypography
-                
-                
-
                   variant="button"
                   fontWeight="medium"
                   color={light && transparentNavbar ? "white" : "dark"}
@@ -251,22 +238,7 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
                 </ArgonTypography>
               </IconButton>
 
-              {/*  <IconButton
-                size="small"
-                color={light && transparentNavbar ? "white" : "dark"}
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon>{miniSidenav ? "menu_open" : "menu"}</Icon>
-              </IconButton> */}
-              {/* <IconButton
-                size="small"
-                color={light && transparentNavbar ? "white" : "dark"}
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon>settings</Icon>
-              </IconButton> */}
+              
               <IconButton
                 size="small"
                 color={light && transparentNavbar ? "white" : "dark"}
@@ -287,7 +259,6 @@ function DashboardNavbar({ absolute, light, isMini, handleClick, data }) {
   );
 }
 
-// Setting default values for the props of DashboardNavbar
 DashboardNavbar.defaultProps = {
   absolute: false,
   light: true,

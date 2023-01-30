@@ -56,8 +56,7 @@ function Categories() {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("userssssssssssssss")
-  console.log(user)
+
 
   //START ADDING NEW PRODUCT
   const [categoryData, setCategoryData] = useState({
@@ -80,7 +79,7 @@ function Categories() {
   ];
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
 
 
@@ -88,26 +87,14 @@ function Categories() {
     const isValid = await AddCategorySchema.isValid(categoryData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(categoryData);
     } else {
-      console.log(categoryData);
       await addCategory(categoryData)
         .then((res) => {
-
-
-          console.log("addedd")
-
-          console.log(res)
-
           if (res.status == 201 ) {
-            console.log("Category Added");
             toast.success(" Successfully Added ");
             handleGetCategoryList();
             setShowAddCategoryForm(false)
-            console.log(res.data.result);
           } else {
-            console.log("Category Could Not Be Added");
-            console.log(res.data.result);
             toast.error("Category Could Not Be Added");
           }
         })
@@ -122,7 +109,7 @@ function Categories() {
   //handledit
 
   const handleEdit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
 
     setCategoryData({ ...categoryData, userid: user.id});
@@ -130,19 +117,13 @@ function Categories() {
     const isValid = await AddCategorySchema.isValid(categoryData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
-      console.log(categoryData);
     } else {
-      console.log(categoryData);
       await editCategoriee(categoryData.id, categoryData)
         .then((res) => {
           if (res.status == 200 ) {
-            console.log("category Updated");
             toast.success("category Updated Successfully");
             handleGetCategoryList()
-            console.log(res.data.result);
           } else {
-            console.log("category Could Not Be Updated");
-            console.log(res.data.result);
             toast.error("category Could Not Be Updated");
           }
         })
@@ -184,23 +165,18 @@ function Categories() {
 
 
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("userssssssssssssss")
-    console.log(user)
+ 
     setCategoryList([]);
     setScreenLoading(true);
 
     try {
       await getCategories()
         .then((res) => {
-          console.log('theeeeeeee');
-          console.log(res);
+          
 
-          console.log(res.data);
-
-           if (res.data.length > 0) {
-            console.log("Category List");
-            console.log(res.data);
-            setCategoryList(res.data);
+           if (res.data.status === 'true') {
+           
+            setCategoryList(res.data.result);
           } else {
             setCategoryList([]);
           }
@@ -281,7 +257,6 @@ function Categories() {
                 <Button onClick={() => {
 
                   const user = JSON.parse(localStorage.getItem("user"));
-                  console.log(user)
                   setCategoryData({
                     name: "",
                     description: "",

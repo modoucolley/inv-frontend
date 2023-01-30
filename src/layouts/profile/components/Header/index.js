@@ -49,26 +49,16 @@ function Header() {
   const [profile, setProfile] = useState()
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log(JSON.parse(localStorage.getItem("user")));
   
   
   let token = localStorage.getItem("token");
 
-  console.log(user.profile)
-  console.log(token)
-  console.log(user.email)
-  console.log(user.email)
 
   const updateCustomer = () => {
 
     const uploadData = new FormData();
     uploadData.append('profile', profile, profile.name)
 
-    console.log(token)
-    console.log(user.email)
-    console.log(user.email)
-
-    console.log(profile)
     fetch(`http://localhost:8000/api/user/userdetails/${user.email}/`, {
       method: 'PATCH',
       headers: new Headers({
@@ -77,16 +67,13 @@ function Header() {
       body: uploadData,
     })
     .then(async res => {
-      console.log(res)
       if(res.status == 200 ){
         toast.success("Company Logo Successfully Updated");
         try {
           await getUserDetails(user.email)
             .then((res) => {
-              console.log(res);
               if (res?.status == 200) {
-                console.log("User Detail");
-                console.log(res.data);
+                
                 localStorage.setItem("user", JSON.stringify(res.data));
                 setUser(JSON.parse(localStorage.getItem("user")))
               } else {

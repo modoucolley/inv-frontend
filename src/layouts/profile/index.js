@@ -59,7 +59,6 @@ function Overview() {
 
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log(JSON.parse(localStorage.getItem("user")));
 
 
   return (
@@ -91,17 +90,17 @@ function Overview() {
               }}
               social={[
                 {
-                  link: "https://www.facebook.com/CreativeTim/",
+                  link: "https://www.facebook.com/gomindz/",
                   icon: <FacebookIcon />,
                   color: "facebook",
                 },
                 {
-                  link: "https://twitter.com/creativetim",
+                  link: "https://twitter.com/gomindz",
                   icon: <TwitterIcon />,
                   color: "twitter",
                 },
                 {
-                  link: "https://www.instagram.com/creativetimofficial/",
+                  link: "https://www.instagram.com/gomindz/",
                   icon: <InstagramIcon />,
                   color: "instagram",
                 },

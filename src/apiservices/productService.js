@@ -2,8 +2,7 @@ import axiosConfig from "./axios-config";
 
 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log("user.email")
-console.log(user?.id)
+
 
 
 export const getProducts = async () => {
@@ -26,7 +25,6 @@ export const getProductCount = async () => {
       return response;
     })
     .catch((err) => {
-      console.log(err);
       toast.error(err);
     });
 
@@ -37,13 +35,9 @@ export const addProduct = async (productData) => {
   const data = await axiosConfig
     .post(`/store/products/`, productData)
     .then((response) => {
-      console.log("Api Response")
-      console.log(response)
       return response;
     })
     .catch((err) => {
-      console.log("Api Error")
-      console.log(err.response.data.result);
       return err.response;
     });
 
@@ -55,13 +49,11 @@ export const deleteProduct = async (id) => {
   const data = await axiosConfig
     .delete(`/store/products/${id}/`)
     .then((response) => {
-      console.log("Api Response")
-      console.log(response)
+      
       return response;
     })
     .catch((err) => {
-      console.log("Api Error")
-      console.log(err);
+      
       return err;
     });
 
@@ -72,13 +64,11 @@ export const editProduct = async (productData) => {
   const data = await axiosConfig
     .put(`/store/products/${productData.id}/`, productData)
     .then((response) => {
-      console.log("Api Response")
-      console.log(response)
+      
       return response;
     })
     .catch((err) => {
-      console.log("Api Error")
-      console.log(err.response.data.result);
+      
       return err.response;
     });
 

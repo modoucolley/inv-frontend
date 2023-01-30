@@ -43,13 +43,13 @@ function Footer() {
               </Link>
             </ArgonBox>
             <ArgonBox mr={{ xs: 2, lg: 3, xl: 6 }}>
-            <Link to='/home'>
-              <ArgonTypography component="a" variant="body2" color="secondary">
-                About Us
-              </ArgonTypography>
+              <Link to='/home'>
+                <ArgonTypography component="a" variant="body2" color="secondary">
+                  About Us
+                </ArgonTypography>
               </Link>
             </ArgonBox>
-            <ArgonBox mr={{ xs: 0, lg: 3, xl: 6 }}>
+            {/* <ArgonBox mr={{ xs: 0, lg: 3, xl: 6 }}>
             <Link to={{}}>
               <ArgonTypography component="a" variant="body2" color="secondary">
                 Team
@@ -71,7 +71,7 @@ function Footer() {
               </ArgonTypography>
               </Link>
               
-            </ArgonBox>
+            </ArgonBox> */}
           </ArgonBox>
         </Grid>
         <Grid item xs={12} lg={8}>
