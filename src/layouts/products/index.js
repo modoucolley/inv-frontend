@@ -286,7 +286,7 @@ function Products() {
             />
           </ArgonBox>
           <ArgonBox display="flex" flexDirection="column">
-            <ArgonTypography variant="button" fontWeight="medium">
+            <ArgonTypography variant="button" fontWeight="medium" >
               {item.name}
             </ArgonTypography>
             <ArgonTypography variant="caption" color="secondary">
@@ -298,10 +298,10 @@ function Products() {
 
       stock: (
         <ArgonBox display="flex" flexDirection="column">
-          <ArgonTypography variant="caption" fontWeight="medium" color="text">
+          <ArgonTypography variant="caption" fontWeight="medium" fontSize= "1.75rem" 
+              color = {item.stock >= 5 ? "primary" : "error"}>
             {item.stock}
           </ArgonTypography>
-          <ArgonTypography variant="caption" color="secondary"></ArgonTypography>
         </ArgonBox>
       ),
       category: (
@@ -340,7 +340,6 @@ function Products() {
             setEditFormActive(true);
             setShowAddProductForm(true);
             setProductData(item);
-
             setProductData({
               ...item,
               ["category_id"]: item.category.id,

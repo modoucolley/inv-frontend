@@ -13,11 +13,11 @@ import ArgonBox from "components/ArgonBox";
 import Suppliers from "layouts/suppliers";
 import Buyers from "layouts/buyers";
 import Products from "layouts/products";
-import Orders from "layouts/orders";
 import Categories from "layouts/categories";
 import Invoices from "layouts/invoices";
 import Home from "layouts/home";
 import ContactUs from "layouts/contact-us";
+import Receipts from "layouts/receipts";
 
 const routes = [
 
@@ -37,16 +37,7 @@ const routes = [
     icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
     component: <Dashboard />,
   },
-  {
-    type: "route",
-    name: "Orders",
-    key: "orders",
-    route: "/orders",
-    icon: (
-      <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-delivery-fast" />
-    ),
-    component: <Orders />,
-  },
+
   {
     type: "route",
     name: "Invoices",
@@ -57,6 +48,19 @@ const routes = [
     ),
     component: <Invoices />,
   },
+
+
+  {
+    type: "route",
+    name: "Receipts",
+    key: "receipts",
+    route: "/receipts",
+    icon: (
+      <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-delivery-fast" />
+    ),
+    component: <Receipts />,
+  },
+  
   
   {
     type: "route",

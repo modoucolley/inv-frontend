@@ -53,9 +53,8 @@ function Illustration() {
 
         
           
-          if (res.data.status == true) {
+          if (res.status == 200) {
             localStorage.setItem("token", res.data.token);
-
 
             try {
               await getUserDetails(userData.email)

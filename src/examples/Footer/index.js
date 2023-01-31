@@ -90,7 +90,6 @@ Footer.defaultProps = {
     { to: "/", name: "Gomindz" },
     { to: "/", name: "About Us" },
     { to: "/contact-us", name: "Contact Us" },
-    { to: "/", name: "License" },
   ],
 };
 

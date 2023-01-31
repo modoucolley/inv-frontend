@@ -1,14 +1,13 @@
 import { toast } from "react-toastify";
 import axiosConfig from "./axios-config";
 
-export const getInvoices = async () => {
+export const getReceipts = async () => {
   const data = await axiosConfig
-    .get(`/store/invoices/`)
+    .get(`/store/receipts/`) 
     .then((response) => {
       return response;
     })
     .catch((err) => {
-      console.log(err);
       toast.error(err);
     });
 
@@ -16,14 +15,13 @@ export const getInvoices = async () => {
 };
 
 
-export const getInvoiceCount = async () => {
+export const getReceiptCount = async () => {
   const data = await axiosConfig
-    .get(`/store/invoicecount/`)
+    .get(`/store/ordercount/`)
     .then((response) => {
       return response;
     })
     .catch((err) => {
-      console.log(err);
       toast.error(err);
     });
 
@@ -31,27 +29,10 @@ export const getInvoiceCount = async () => {
 };
 
 
-export const addInvoice = async (productData) => {
+export const addReceipt = async (productData) => {
   const data = await axiosConfig
-    .post(`/store/invoices/`, productData)
+    .post(`/store/receipts/`, productData)
     .then((response) => {
-      
-      return response;
-    })
-    .catch((err) => {
-      console.log(err.response.data.result);
-      return err.response;
-    });
-
-  return data;
-};
-
-
-export const deleteInvoice = async (id) => {
-  const data = await axiosConfig
-    .delete(`/store/invoices/${id}`)
-    .then((response) => {
-      
       return response;
     })
     .catch((err) => {
@@ -62,20 +43,18 @@ export const deleteInvoice = async (id) => {
 };
 
 
-
-export const editInvoice = async (id, data) => {
-
-  console.log(data)
-  const data1 = await axiosConfig
-    .put(`/store/invoices/${id}`, data)
+export const deleteReceipt = async (id) => {
+  const data = await axiosConfig
+    .delete(`/store/receipts/${id}`)
     .then((response) => {
       return response;
     })
     .catch((err) => {
-      console.log(err)
       return err.response;
     });
 
-  return data1;
+  return data;
 };
+
+
 

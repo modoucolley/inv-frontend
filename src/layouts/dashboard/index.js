@@ -346,12 +346,10 @@ function Default() {
               count={
                 productCount?.productcount == undefined
                   ? 0 + " Product"
-                  : productCount?.productcount + " Product(s)"
+                  : productCount?.productcount
               }
               amount={
-                productCount?.productcount == undefined
-                  ? 0 + " Product"
-                  : productCount?.productcount + " Product(s)"
+                ''
               }
               icon={{ color: "error", component: <i className="ni ni-world" /> }}
               percentage={{ color: "success", count: "+3%", text: "since last week" }}
@@ -363,12 +361,10 @@ function Default() {
               count={
                 supplierCount?.suppliercount == undefined
                   ? 0 + " Supplier"
-                  : supplierCount?.suppliercount + " Supplier(s)"
+                  : supplierCount?.suppliercount 
               }
               amount={
-                supplierCount?.suppliercount == undefined
-                  ? 0 + " Supplier"
-                  : supplierCount?.suppliercount + " Supplier(s)"
+                ''
               }
               icon={{ color: "success", component: <i className="ni ni-paper-diploma" /> }}
               percentage={{ color: "error", count: "-2%", text: "since last quarter" }}
@@ -380,13 +376,10 @@ function Default() {
               count={
                 buyerCount?.buyercount == undefined
                   ? 0 + " Buyer"
-                  : buyerCount?.buyercount + " Buyer(s)"
+                  : buyerCount?.buyercount 
               }
-              amount={
-                buyerCount?.buyercount == undefined
-                  ? 0 + " Buyer"
-                  : buyerCount?.buyercount + " Buyer(s)"
-              }
+              amount={''
+                }
               icon={{ color: "warning", component: <i className="ni ni-cart" /> }}
               percentage={{ color: "success", count: "+5%", text: "than last month" }}
             />

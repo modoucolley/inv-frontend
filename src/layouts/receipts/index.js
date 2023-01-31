@@ -22,7 +22,6 @@ import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import { getOrders } from "apiservices/orderService";
 import { AddOrderSchema } from "formValidation/addForm";
 import Select from "react-select";
-import { addOrder, deleteOrder } from "apiservices/orderService";
 import { getProducts } from "apiservices/productService";
 import { getSuppliers } from "apiservices/supplierService";
 import "react-toastify/dist/ReactToastify.css";
@@ -45,8 +44,11 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import "./index.css";
+import { addReceipt, getReceipts, deleteReceipt} from "apiservices/receiptService";
 
-function Orders() {
+
+
+function Receipts() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showOrderTable, setShowOrderTable] = useState(true);
@@ -97,16 +99,16 @@ function Orders() {
     p: 4,
   };
 
-  const handleGetOrderList = async () => {
+  const handleGetReceiptList = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    toast.success("Fetching Orders!!", { autoClose: 2000 });
+    toast.success("Fetching Receipts!!", { autoClose: 2000 });
 
     setOrderList([]);
     setScreenLoading(true);
 
     try {
-      await getOrders(user.id)
+      await getReceipts()
         .then((res) => {
           if (res.data?.status === "true") {
             setOrderList(res.data.result);
@@ -304,11 +306,11 @@ function Orders() {
   //END ADDING NEW PRODUCT
 
   //DELETE SUPPLIER
-  const handleDeleteOrder = async (id) => {
-    await deleteOrder(id)
+  const handleDeleteReceipt = async (id) => {
+    await deleteReceipt(id)
       .then((res) => {
         if (res.data?.status === "true") {
-          handleGetOrderList();
+          handleGetReceiptList();
         } else {
         }
       })
@@ -400,7 +402,7 @@ function Orders() {
       delete: (
         <Button
           onClick={async () => {
-            handleDeleteOrder(item.id);
+            handleDeleteReceipt(item.id);
           }}
         >
           <ArgonBox component="i" color="red" fontSize="34px" className="ni ni-fat-remove" />
@@ -812,7 +814,7 @@ function Orders() {
       ...orderData,
       ["products"]: resTopics,
       ["total_price"]: ordertotalPrice,
-      ["type"]: "order",
+      ["type"]: "receipt",
       ["status"]: "pending",
       ["userid"]: user.id,
     });
@@ -821,7 +823,7 @@ function Orders() {
       ...orderData,
       ["products"]: resTopics,
       ["total_price"]: ordertotalPrice,
-      ["type"]: "invoice",
+      ["type"]: "receipt",
       ["status"]: "pending",
       ["userid"]: user.id,
     });
@@ -835,11 +837,11 @@ function Orders() {
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
     } else {
-      toast.success("Adding Order!!");
-      await addOrder(orderData)
+      toast.success("Adding Receipt!!");
+      await addReceipt(orderData)
         .then((res) => {
           if (res.data?.status === "true") {
-            toast.success(" Successfully Added");
+            toast.success("Successfully Added");
 
             setFirstProductId("");
             setIdProductRow(0);
@@ -849,7 +851,7 @@ function Orders() {
               status: "pending",
               receipt: uuid,
               total_price: "",
-              type: "order",
+              type: "receipt",
               products: [],
             });
 
@@ -857,14 +859,15 @@ function Orders() {
             setShowAddForm(false);
             setShowOrderTable(true);
             setOpen(false);
-            handleGetOrderList();
+            handleGetReceiptList();
           } else {
-            toast.error("Order Could Not Be Added");
+            toast.error(res.data.message);
+            console.log(res.data.message)
             setOpen(false);
           }
         })
         .catch((err) => {
-          console.log("Error Adding Order", err);
+          console.log("Error Adding Receipt", err);
           setOpen(false);
         });
     }
@@ -877,7 +880,7 @@ function Orders() {
       toast.error("Please enter all the required fields!!");
     } else {
       toast.success("Adding Invoice!!");
-      await addOrder(invoiceData)
+      await addReceipt(invoiceData)
         .then((res) => {
           if (res.data?.status === "true") {
             toast.success("Order Added Successfully");
@@ -886,7 +889,7 @@ function Orders() {
               status: "pending",
               receipt: uuid,
               total_price: "",
-              type: "order",
+              type: "receipt",
               products: [],
             });
             setFirstProductId("");
@@ -897,7 +900,7 @@ function Orders() {
             setShowOrderTable(true);
             setOtherProducts([]);
             setOpen(false);
-            handleGetOrderList();
+            handleGetReceiptList();
             navigate("/invoices");
           } else {
             toast.error("Order Could Not Be Added");
@@ -905,17 +908,17 @@ function Orders() {
           }
         })
         .catch((err) => {
-          console.log("Error Adding Order", err);
+          console.log("Error Adding Receipt", err);
           setOpen(false);
         });
     }
   };
 
   useEffect(() => {
-    handleGetOrderList();
+    handleGetReceiptList();
     handleGetProductList();
-    handleGetSupplierList();
-    handleGetBuyerList();
+    //handleGetSupplierList();
+    //handleGetBuyerList();
   }, []);
 
   const [open, setOpen] = React.useState(false);
@@ -942,13 +945,13 @@ function Orders() {
         <Fade in={open}>
           <Box sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
-              Add a New Order
+              Add Receipt
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}></Typography>
-            <Button style={{ marginLeft: -11 }} onClick={() => handleComfirmInvoice()}>
-              Add As Invoice
+            <Button style={{ marginLeft: -11 }} onClick={() => setOpen(false)}>
+              Cancel
             </Button>
-            <Button onClick={() => handleComfirm()}>Add As Order</Button>
+            <Button onClick={() => handleComfirm()}>Comfirm</Button>
           </Box>
         </Fade>
       </Modal>
@@ -959,7 +962,7 @@ function Orders() {
           <ArgonBox mb={35}>
             <Card>
               <ArgonBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                <ArgonTypography variant="h6">Order table</ArgonTypography>
+                <ArgonTypography variant="h6">Receipt table</ArgonTypography>
 
                 <Button
                   onClick={() => {
@@ -982,7 +985,7 @@ function Orders() {
                     setShowOrderTable(false);
                   }}
                 >
-                  <h4 style={{ paddingRight: 10 }}>Add Orders </h4>
+                  <h4 style={{ paddingRight: 10 }}>Add Receipts </h4>
                   <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-fat-add" />
                 </Button>
               </ArgonBox>
@@ -1007,14 +1010,14 @@ function Orders() {
             <ArgonBox mb={3} pb={20}>
               <Card>
                 <ArgonBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                  <ArgonTypography variant="h6">Orders table</ArgonTypography>
+                  <ArgonTypography variant="h6">Receipts table</ArgonTypography>
                   <Button
                     onClick={() => {
                       setShowOrderTable(true);
                       setShowAddForm(false);
                     }}
                   >
-                    <h4 style={{ paddingRight: 10 }}>Show Order Table </h4>
+                    <h4 style={{ paddingRight: 10 }}>Show Receipt Table </h4>
                     <ArgonBox
                       component="i"
                       color="info"
@@ -1232,7 +1235,7 @@ function Orders() {
                   }}
                   className="btn btn-secondary"
                 >
-                  <i className="icon-printer"></i> Show Order Table
+                  <i className="icon-printer"></i> Show Receipt Table
                 </a>
               </div>
             </div>
@@ -1374,4 +1377,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default Receipts;
