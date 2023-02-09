@@ -18,28 +18,12 @@ import { useState, useEffect } from "react";
 // react-router-dom components
 import { Link } from "react-router-dom";
 
-// @mui material components
-import Switch from "@mui/material/Switch";
-
-// Argon Dashboard 2 MUI components
-import ArgonBox from "components/ArgonBox";
-import ArgonTypography from "components/ArgonTypography";
-import ArgonInput from "components/ArgonInput";
-import ArgonButton from "components/ArgonButton";
-
-// Authentication layout components
-import IllustrationLayout from "layouts/authentication/components/IllustrationLayout";
-
 import { useArgonController, setMiniSidenav, setLayout, setDarkSidenav } from "context";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import avatar from "../../assets/images/bg9.jpg";
-
-import mySvgWhite from "../../assets/images/down-arrow-white.svg";
-import mySvgWDark from "../../assets/images/down-arrow-dark.svg";
-import mySvgDownArrow from "../../assets/images/down-arrow.svg";
 
 import { useNavigate } from "react-router-dom";
 
@@ -48,8 +32,8 @@ const bgImage =
   "https://us.123rf.com/450wm/kostsov/kostsov1906/kostsov190600026/126080344-modern-showcase-with-empty-space-on-pedestal-on-blue-background-3d-rendering-.jpg?ver=6";
 
 function Home() {
-  const [rememberMe, setRememberMe] = useState(false);
 
+  const [rememberMe, setRememberMe] = useState(false);
   const handleSetRememberMe = () => {
     console.log("you click me");
   };
