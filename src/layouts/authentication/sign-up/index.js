@@ -55,6 +55,9 @@ function Cover() {
   const handleSubmit = async (e) => {
     //e.preventDefault();
 
+    localStorage.removeItem("user")
+    localStorage.removeItem("token");
+
     const isValid = await RegisterUserSchema.isValid(userData);
     if (!isValid) {
       toast.error("Please enter all the required fields!!");
