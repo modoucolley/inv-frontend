@@ -1,20 +1,15 @@
 {
   "files": {
-    "main.css": "/inv-frontend/static/css/main.ff348f7c.css",
-    "main.js": "/inv-frontend/static/js/main.c22e6cfd.js",
+    "main.css": "/inv-frontend/static/css/main.93024387.css",
+    "main.js": "/inv-frontend/static/js/main.8a751225.js",
     "static/media/GomindzInventory.png": "/inv-frontend/static/media/GomindzInventory.3b409552c07e7aea9b0e.png",
     "static/media/vr-bg.jpg": "/inv-frontend/static/media/vr-bg.09e3bc1cff3711b57a2c.jpg",
     "static/media/img-2.jpg": "/inv-frontend/static/media/img-2.d97bd8ee71e6afc19404.jpg",
     "static/media/img-1.jpg": "/inv-frontend/static/media/img-1.18c5ecb11935c7e58781.jpg",
     "static/media/img-3.jpg": "/inv-frontend/static/media/img-3.6a692091d1aec33aca3c.jpg",
     "static/media/bg9.jpg": "/inv-frontend/static/media/bg9.cf9a123e2a3d371d53da.jpg",
-    "static/media/kal-visuals-square.jpg": "/inv-frontend/static/media/kal-visuals-square.b17315e5686e05d92dff.jpg",
     "static/media/armanty.jpeg": "/inv-frontend/static/media/armanty.f0892aaa8eac110ec95f.jpeg",
-    "static/media/marie.jpg": "/inv-frontend/static/media/marie.99c612eb60728a5aeeb0.jpg",
-    "static/media/home-decor-3.jpg": "/inv-frontend/static/media/home-decor-3.cd42f0faa83f4e381f75.jpg",
     "static/media/icon-sun-cloud.png": "/inv-frontend/static/media/icon-sun-cloud.3399b234b40032f90d9b.png",
-    "static/media/home-decor-2.jpg": "/inv-frontend/static/media/home-decor-2.b2eadbdedecfc0c7e6bd.jpg",
-    "static/media/home-decor-1.jpg": "/inv-frontend/static/media/home-decor-1.8ea567752df013c14430.jpg",
     "static/media/Tomato.jpeg": "/inv-frontend/static/media/Tomato.862ec22d095c799b941a.jpeg",
     "static/media/visa.png": "/inv-frontend/static/media/visa.71c0d5e9e2aaee42e4c3.png",
     "static/media/coffie.jpeg": "/inv-frontend/static/media/coffie.afd96a987f03b5881a19.jpeg",
@@ -25,7 +20,6 @@
     "static/media/team-5.jpg": "/inv-frontend/static/media/team-5.d59ab7b9f95f1169cf83.jpg",
     "static/media/team-2.jpg": "/inv-frontend/static/media/team-2.13ae2ce3e12f4cfed420.jpg",
     "static/media/team-3.jpg": "/inv-frontend/static/media/team-3.0ef0be95e6850814c79e.jpg",
-    "static/media/ivana-square.jpg": "/inv-frontend/static/media/ivana-square.f7bc23b269d1d2509c82.jpg",
     "static/media/team-4.jpg": "/inv-frontend/static/media/team-4.85c82b6e60178804017f.jpg",
     "static/media/gambia.jpeg": "/inv-frontend/static/media/gambia.d66130c74106032712c7.jpeg",
     "static/media/logo-slack.svg": "/inv-frontend/static/media/logo-slack.d8feb9c5b2a92c377e8c5b7a10faabc9.svg",
@@ -34,13 +28,10 @@
     "index.html": "/inv-frontend/index.html",
     "static/media/logo-spotify.svg": "/inv-frontend/static/media/logo-spotify.3f055cde07c024fb2b73063b46416f1b.svg",
     "static/media/logo-jira.svg": "/inv-frontend/static/media/logo-jira.f9c1ddbe3e751a29bd16580977ade064.svg",
-    "static/media/logo-webdev.svg": "/inv-frontend/static/media/logo-webdev.88aae85b5a8a994aa0009d6c389a7f77.svg",
-    "static/media/down-arrow-dark.svg": "/inv-frontend/static/media/down-arrow-dark.0de0d7f941fa503159fc6b623073b178.svg",
-    "static/media/down-arrow.svg": "/inv-frontend/static/media/down-arrow.051bd8d92332ad76ee671f521a05a476.svg",
-    "static/media/down-arrow-white.svg": "/inv-frontend/static/media/down-arrow-white.65368f2dfa77fc3dd394bd5f75a9d7f5.svg"
+    "static/media/logo-webdev.svg": "/inv-frontend/static/media/logo-webdev.88aae85b5a8a994aa0009d6c389a7f77.svg"
   },
   "entrypoints": [
-    "static/css/main.ff348f7c.css",
-    "static/js/main.c22e6cfd.js"
+    "static/css/main.93024387.css",
+    "static/js/main.8a751225.js"
   ]
 }
