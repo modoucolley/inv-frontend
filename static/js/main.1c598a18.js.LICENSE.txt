@@ -26,8 +26,8 @@
  */
 
 /*!
- * github-buttons v2.22.1
- * (c) 2022 なつき
+ * github-buttons v2.22.2
+ * (c) 2023 なつき
  * @license BSD-2-Clause
  */
 
@@ -80,7 +80,7 @@
  */
 
 /**
- * @remix-run/router v1.0.4
+ * @remix-run/router v1.2.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -91,7 +91,7 @@
  */
 
 /**
- * React Router DOM v6.4.4
+ * React Router DOM v6.6.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -102,7 +102,7 @@
  */
 
 /**
- * React Router v6.4.4
+ * React Router v6.6.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -169,7 +169,7 @@
  * @preserve
  */
 
-/** @license MUI v5.10.16
+/** @license MUI v5.11.0
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
