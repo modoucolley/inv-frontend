@@ -1,16 +1,14 @@
-import { toast } from "react-toastify";
 import axiosConfig from "./axios-config";
 
-export const getOrders = async (customerId) => {
+export const getOrders = async (type) => {
   const data = await axiosConfig
-    .get(`/store/orders/`) 
+    .get(`/store/orders?type=${type}`) 
     .then((response) => {
       return response;
     })
     .catch((err) => {
-      toast.error(err);
+      return err.response;
     });
-
   return data;
 };
 
@@ -22,25 +20,53 @@ export const getOrderCount = async () => {
       return response;
     })
     .catch((err) => {
-      toast.error(err);
+      return err.response;
     });
 
   return data;
 };
 
 
-export const addOrder = async (productData) => {
+export const addOrder = async (type, productData) => {
   const data = await axiosConfig
-    .post(`/store/orders/`, productData)
+    .post(`/store/orders?type=${type}`, productData)
     .then((response) => {
       return response;
     })
     .catch((err) => {
       return err.response;
     });
-
   return data;
 };
+
+
+export const editOrder = async (id, updateData) => {
+
+  const data = await axiosConfig
+    .patch(`/store/orders/${id}`, updateData)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return data;
+};
+
+
+export const updateOrder = async (id, updateData) => {
+
+  const data = await axiosConfig
+    .put(`/store/orders/${id}`, updateData)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return data;
+};
+
 
 
 export const deleteOrder = async (id) => {
@@ -56,11 +82,3 @@ export const deleteOrder = async (id) => {
   return data;
 };
 
-
-const orderService = {
-  getOrders,
-  addOrder,
-  deleteOrder
-};
-
-export default orderService;

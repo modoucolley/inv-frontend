@@ -11,13 +11,13 @@ import SignUp from "layouts/authentication/sign-up";
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
 import Suppliers from "layouts/suppliers";
-import Buyers from "layouts/buyers";
 import Products from "layouts/products";
 import Categories from "layouts/categories";
 import Invoices from "layouts/invoices";
 import Home from "layouts/home";
-import ContactUs from "layouts/contact-us";
+import ContactUs from "layouts/contact";
 import Receipts from "layouts/receipts";
+import Damages from "layouts/damages";
 
 const routes = [
 
@@ -84,13 +84,13 @@ const routes = [
   },
   {
     type: "route",
-    name: "Buyers",
-    key: "buyers",
-    route: "/buyers",
+    name: "Damages",
+    key: "damages",
+    route: "/damages",
     icon: (
       <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-cart" />
     ),
-    component: <Buyers />,
+    component: <Damages />,
   },
   {
     type: "route",
@@ -113,15 +113,6 @@ const routes = [
     icon: <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-single-02" />,
     component: <Profile />,
   },
-  // {
-  //   type: "route",
-  //   name: "Billing",
-  //   key: "billing",
-  //   route: "/billing",
-  //   icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
-  //   component: <Billing />,
-  // },
-
   {
     type: "route",
     name: "Contact Us",

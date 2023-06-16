@@ -25,61 +25,56 @@ import Slider from "layouts/dashboard/components/Slider";
 
 // Data
 import salesTableData from "layouts/dashboard/data/salesTableData";
+
+import { ToastContainer } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import { getStoreStatistics } from "apiservices/storeStatisticsService";
 import { getOrderCount } from "apiservices/orderService";
-import { getProductCount } from "apiservices/productService";
-import { getSupplierCount } from "apiservices/supplierService";
-import { getBuyerCount } from "apiservices/buyerService";
-import { getCategories } from "apiservices/categoryService";
-import { getProducts } from "apiservices/productService";
-import ArgonAvatar from "components/ArgonAvatar";
-import ArgonBadge from "components/ArgonBadge";
-import { Button } from "@mui/material";
-import Table from "examples/Tables/Table";
-
-
-import { Routes, Route, Navigate, useLocation, } from "react-router-dom";
 
 
 // pro
 function Default() {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const { size } = typography;
+  const [storeStatistics, setStoreStatistics] = useState({});
   const [orderCount, setOrderCount] = useState({});
-  const [productCount, setProductCount] = useState({});
-  const [supplierCount, setSupplierCount] = useState({});
-  const [buyerCount, setBuyerCount] = useState({});
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryStatList, setCategoryStatList] = useState([]);
+  const categoriesListStatData = [];
 
-  const [productList, setProductList] = useState([]);
-  const [productListA, setProductListA] = useState([]);
 
-  const categoriesListData = [];
-
-  const [showSearch, setShowSearch] = useState(false);
-
-  //START GET CATEGORY
-  const handleGetCategoryList = async () => {
-    setCategoryList([]);
+  const handleGetStoreStatistics = async () => {
+    setStoreStatistics({});
+    setCategoryStatList([]);
 
     try {
-      await getCategories()
-        .then((res) => {
+      const res = await getStoreStatistics();
+      if (res.data?.status) {
+        setStoreStatistics(res.data?.statistics);
+        setCategoryStatList(res.data?.statistics.category_stat);
+      } else {
+        setStoreStatistics({});
+      }
+    } catch (error) {}
+  };
 
-          console.log(res.data)
-          if (res.data.status === 'true') {
-            setCategoryList(res.data.result);
+  const handleGetOrderCount = async () => {
+    setOrderCount({});
+    try {
+      await getOrderCount()
+        .then((res) => {
+          if (res.data?.status === "true") {
+            setOrderCount(res.data.result);
           } else {
-            setCategoryList([]);
+            setOrderCount({});
           }
         })
-        .catch((err) => console.log("Error in Getting setCategoryList", err));
-    } catch (error) {
-      console.log(error);
-    }
+        .catch((err) => {});
+    } catch (error) {}
   };
-  //END GET CATEGORY
 
-  categoryList.map(function (item, i) {
-    categoriesListData.push({
+
+  categoryStatList.map(function (item, i) {
+    categoriesListStatData.push({
       color: "dark",
       icon: <i className="ni ni-mobile-button" style={{ fontSize: "12px" }} />,
       name: item.name,
@@ -95,25 +90,6 @@ function Default() {
     });
   });
 
-  const handleGetOrderCount = async () => {
-    setOrderCount({});
-
-    try {
-      await getOrderCount()
-        .then((res) => {
-          if (res.data?.status === "true") {
-            
-            setOrderCount(res.data.result);
-          } else {
-            setOrderCount({});
-          }
-        })
-        .catch((err) => console.log("Error", err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const gradientLineChartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
@@ -125,282 +101,87 @@ function Default() {
     ],
   };
 
-  const handleGetProductCount = async () => {
-    setProductCount({});
-
-    try {
-      await getProductCount()
-        .then((res) => {
-          if (res.data?.status === "true") {
-            setProductCount(res.data.result);
-          } else {
-            setProductCount({});
-          }
-        })
-        .catch((err) => console.log("Error", err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleGetSupplierCount = async () => {
-    setSupplierCount({});
-
-    try {
-      await getSupplierCount()
-        .then((res) => {
-          
-          if (res.data?.status === "true") {
-            setSupplierCount(res.data.result);
-          } else {
-            setSupplierCount({});
-          }
-        })
-        .catch((err) => console.log("Error", err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleGetBuyerCount = async () => {
-    setBuyerCount({});
-
-    try {
-      await getBuyerCount()
-        .then((res) => {
-          
-          if (res.data?.status === "true") {
-  
-            setBuyerCount(res.data.result);
-          } else {
-            setBuyerCount({});
-          }
-        })
-        .catch((err) => console.log("Error", err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //START GET PRODUCTS
-  const handleGetProductList = async () => {
-    setProductList([]);
-
-    try {
-      await getProducts()
-        .then((res) => {
-          
-          if (res.data?.status === "true") {
-            setProductList(res.data.result);
-          } else {
-            setProductList([]);
-          }
-        })
-        .catch((err) => console.log("Error in Getting Products", err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  //END GET PRODUCTS
-
   useEffect(() => {
-
+    user != null && handleGetStoreStatistics();
     user != null && handleGetOrderCount();
-    user != null && handleGetProductCount();
-    user != null && handleGetSupplierCount();
-    user != null && handleGetBuyerCount();
-    user != null && handleGetCategoryList();
-    user != null && handleGetProductList();
   }, []);
-
-  function handleClick(e) {
-    setShowSearch(true);
-
-    const filtered2 = productList.filter((employee) => {
-     
-
-      if (employee.name.toLowerCase() === e.target.value.toLowerCase()) {
-        setProductListA([employee]);
-      }
-
-      if (e.target.value == "") {
-        setShowSearch(false);
-      }
-    });
-  }
-
-  const columns = [
-    { name: "product", align: "left" },
-    { name: "category", align: "left" },
-    { name: "stock", align: "left" },
-    { name: "status", align: "center" },
-    { name: "price", align: "center" },
-    { name: "edit", align: "center" },
-    { name: "delete", align: "center" },
-  ];
-
-  const rows = [];
-
-  productListA.map(function (item, i) {
-    rows.push({
-      product: (
-        <ArgonBox display="flex" alignItems="center" px={1} py={0.5}>
-          <ArgonBox display="flex" flexDirection="column">
-            <ArgonTypography variant="button" fontWeight="medium">
-              {item.name}
-            </ArgonTypography>
-            <ArgonTypography variant="caption" color="secondary">
-              {item.label}
-            </ArgonTypography>
-          </ArgonBox>
-        </ArgonBox>
-      ),
-
-      stock: (
-        <ArgonBox display="flex" flexDirection="column">
-          <ArgonTypography variant="caption" fontWeight="medium" color="text">
-            {item.stock}
-          </ArgonTypography>
-          <ArgonTypography variant="caption" color="secondary"></ArgonTypography>
-        </ArgonBox>
-      ),
-      category: (
-        <ArgonBox display="flex" flexDirection="column">
-          <ArgonTypography variant="caption" fontWeight="medium" color="text">
-            {item.category.name}
-          </ArgonTypography>
-          <ArgonTypography variant="caption" color="secondary"></ArgonTypography>
-        </ArgonBox>
-      ),
-      status: (
-        <ArgonBadge
-          variant="gradient"
-          badgeContent={item.status}
-          color="success"
-          size="xs"
-          container
-        />
-      ),
-      price: (
-        <ArgonTypography variant="caption" color="secondary" fontWeight="medium">
-          {item.price}
-        </ArgonTypography>
-      ),
-      edit: (
-        <Button
-          onClick={async () => {
-            setEditFormActive(true);
-            setShowAddProductForm(true);
-            setProductData(item);
-            setProductData({
-              ...item,
-              ["category_id"]: item.category.id,
-              ["category"]: item.category.id,
-            });
-          }}
-        >
-          <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-ruler-pencil" />
-        </Button>
-      ),
-      delete: (
-        <Button
-          onClick={async () => {
-            handleDeleteProduct(item.id);
-          }}
-        >
-          <ArgonBox component="i" color="info" fontSize="34px" className="ni ni-fat-remove" />
-        </Button>
-      ),
-    });
-  });
-
-
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   return (
     <DashboardLayout>
-
       {user == null && <Navigate to="/authentication/sign-in" replace={true} />}
-
-
-      <DashboardNavbar handleClick={handleClick} data={showSearch} />
-
+      <ToastContainer />
+      <DashboardNavbar />
       <ArgonBox py={3}>
         <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12} md={4} lg={2}>
             <DetailedStatisticsCard
-              title="Orders"
-              count={orderCount?.total == undefined ? "D" + 0 : "D" + orderCount?.total}
-              amount={
-                orderCount?.ordercount == undefined
-                  ? 0 + " Orders"
-                  : orderCount?.ordercount + " Order(s)"
-              }
-              icon={{ color: "info", component: <i className="ni ni-money-coins" /> }}
-              percentage={{ color: "success", count: "+55%", text: "since yesterday" }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <DetailedStatisticsCard
-              title="Product"
+              title="Cash InHand"
               count={
-                productCount?.productcount == undefined
-                  ? 0 + " Product"
-                  : productCount?.productcount
+                storeStatistics?.cash_inhand == undefined
+                  ? "D" + 0
+                  : "D" + storeStatistics?.cash_inhand
               }
-              amount={
-                ''
-              }
+              amount={""}
               icon={{ color: "error", component: <i className="ni ni-world" /> }}
               percentage={{ color: "success", count: "+3%", text: "since last week" }}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={4} lg={2}>
             <DetailedStatisticsCard
-              title="Supplier"
+              title="Cash Pending"
               count={
-                supplierCount?.suppliercount == undefined
-                  ? 0 + " Supplier"
-                  : supplierCount?.suppliercount 
+                storeStatistics?.cash_pending == undefined
+                  ? "D" + 0
+                  : "D" + storeStatistics?.cash_pending
               }
-              amount={
-                ''
-              }
-              icon={{ color: "success", component: <i className="ni ni-paper-diploma" /> }}
-              percentage={{ color: "error", count: "-2%", text: "since last quarter" }}
+              amount={""}
+              icon={{ color: "info", component: <i className="ni ni-money-coins" /> }}
+              percentage={{ color: "success", count: "+55%", text: "" }}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          
+          <Grid item xs={12} md={5} lg={2}>
             <DetailedStatisticsCard
-              title="Buyer"
-              count={
-                buyerCount?.buyercount == undefined
-                  ? 0 + " Buyer"
-                  : buyerCount?.buyercount 
-              }
-              amount={''
-                }
+              title="Stock-In"
+              count={storeStatistics?.stock_in}
+              amount={""}
               icon={{ color: "warning", component: <i className="ni ni-cart" /> }}
               percentage={{ color: "success", count: "+5%", text: "than last month" }}
             />
           </Grid>
-        </Grid>
+        
+          <Grid item xs={12} md={5} lg={2}>
+            <DetailedStatisticsCard
+              title="Stock-Out"
+              count={storeStatistics?.stock_out}
+              amount={""}
+              icon={{ color: "warning", component: <i className="ni ni-cart" /> }}
+              percentage={{ color: "success", count: "+5%", text: "than last month" }}
+            />
+          </Grid>
+          
+          <Grid item xs={12} md={6} lg={2}>
+            <DetailedStatisticsCard
+              title="Stock-In-Hand"
+              count={storeStatistics?.stock_inhand}
+              amount={""}
+              icon={{ color: "success", component: <i className="ni ni-paper-diploma" /> }}
+              percentage={{ color: "error", count: "", text: "" }}
+            />
+          </Grid>
+          
+          
 
-        {showSearch && (
-          <ArgonBox
-            style={{ marginTop: 100, marginBottom: 100 }}
-            sx={{
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                    `${borderWidth[1]} solid ${borderColor}`,
-                },
-              },
-            }}
-          >
-            <Table columns={columns} rows={rows} />
-          </ArgonBox>
-        )}
+          <Grid item xs={12} md={6} lg={2}>
+            <DetailedStatisticsCard
+              title="Damages"
+              count={storeStatistics?.number_of_damages}
+              amount={""}
+              icon={{ color: "error", component: <i className="ni ni-world" /> }}
+              percentage={{ color: "success", count: "+3%", text: "since last week" }}
+            />
+          </Grid>
+        </Grid>
 
         <Grid container spacing={3} mb={3}>
           <Grid item xs={12} lg={7}>
@@ -431,7 +212,7 @@ function Default() {
             <SalesTable title="Sales by Regions" rows={salesTableData} />
           </Grid>
           <Grid item xs={12} md={4}>
-            <CategoriesList title="categories of products" categories={categoriesListData} />
+            <CategoriesList title="categories of products" categories={categoriesListStatData} />
           </Grid>
         </Grid>
       </ArgonBox>
